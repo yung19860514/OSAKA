@@ -1,0 +1,175 @@
+{
+  "gameId": "xiantu",
+  "version": "2026-10-07",
+  "products": [
+    {
+      "sku": "xiantu:bundle:first_buy",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "新手首购礼包"
+      },
+      "description": {
+        "zh-TW": "体力 120、金币 5 万、修为 3,000、随机法宝一件"
+      },
+      "image": "https://<遊戲方>/shop/first_buy.png",
+      "suggestedPrice": {
+        "TWD": 30
+      },
+      "limitPerAccount": 1,
+      "contents": [
+        {
+          "item": "stamina",
+          "qty": 120
+        },
+        {
+          "item": "coin",
+          "qty": 50000
+        },
+        {
+          "item": "xp",
+          "qty": 3000
+        },
+        {
+          "item": "art",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "sku": "xiantu:pass:monthly",
+      "kind": "pass",
+      "name": {
+        "zh-TW": "月卡特权（30 天）"
+      },
+      "description": {
+        "zh-TW": "立即生效：挂机收益 +30%、过关金币 +20%、过关修为 +20%"
+      },
+      "image": "https://<遊戲方>/shop/monthly.png",
+      "suggestedPrice": {
+        "TWD": 150
+      },
+      "maxPerOrder": 12,
+      "durationDays": 30,
+      "stackable": true
+    },
+    {
+      "sku": "xiantu:item:stamina_120",
+      "kind": "item",
+      "name": {
+        "zh-TW": "体力补给包"
+      },
+      "description": {
+        "zh-TW": "体力 +120"
+      },
+      "image": "https://<遊戲方>/shop/stamina_120.png",
+      "suggestedPrice": {
+        "TWD": 30
+      },
+      "maxPerOrder": 10
+    },
+    {
+      "sku": "xiantu:item:coin_30w",
+      "kind": "item",
+      "name": {
+        "zh-TW": "金币宝箱"
+      },
+      "description": {
+        "zh-TW": "金币 +30 万"
+      },
+      "image": "https://<遊戲方>/shop/coin_30w.png",
+      "suggestedPrice": {
+        "TWD": 60
+      }
+    },
+    {
+      "sku": "xiantu:item:xp_20k",
+      "kind": "item",
+      "name": {
+        "zh-TW": "修为大丹"
+      },
+      "description": {
+        "zh-TW": "修为 +2 万"
+      },
+      "image": "https://<遊戲方>/shop/xp_20k.png",
+      "suggestedPrice": {
+        "TWD": 150
+      }
+    },
+    {
+      "sku": "xiantu:pack:artifact",
+      "kind": "pack",
+      "name": {
+        "zh-TW": "法宝宝匣"
+      },
+      "description": {
+        "zh-TW": "随机获得一件未拥有的法宝"
+      },
+      "image": "https://<遊戲方>/shop/artifact.png",
+      "suggestedPrice": {
+        "TWD": 300
+      },
+      "maxPerOrder": 8,
+      "probabilityUrl": "https://<平台網域>/play/xiantu/odds/artifact"
+    },
+    {
+      "sku": "xiantu:bundle:growth",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "修仙成长礼包"
+      },
+      "description": {
+        "zh-TW": "金币 120 万、修为 8 万、体力 240"
+      },
+      "image": "https://<遊戲方>/shop/growth.png",
+      "suggestedPrice": {
+        "TWD": 990
+      },
+      "contents": [
+        {
+          "item": "coin",
+          "qty": 1200000
+        },
+        {
+          "item": "xp",
+          "qty": 80000
+        },
+        {
+          "item": "stamina",
+          "qty": 240
+        }
+      ]
+    },
+    {
+      "sku": "xiantu:bundle:supreme",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "仙途至尊礼包"
+      },
+      "description": {
+        "zh-TW": "金币 500 万、修为 40 万、体力 480、随机法宝"
+      },
+      "image": "https://<遊戲方>/shop/supreme.png",
+      "suggestedPrice": {
+        "TWD": 3290
+      },
+      "contents": [
+        {
+          "item": "coin",
+          "qty": 5000000
+        },
+        {
+          "item": "xp",
+          "qty": 400000
+        },
+        {
+          "item": "stamina",
+          "qty": 480
+        },
+        {
+          "item": "art",
+          "qty": 1
+        }
+      ]
+    }
+  ]
+}

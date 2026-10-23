@@ -1,0 +1,283 @@
+{
+  "gameId": "sanguo",
+  "version": "2026-10-07",
+  "products": [
+    {
+      "sku": "sanguo:pack:recruit_adv_1",
+      "kind": "pack",
+      "name": {
+        "zh-TW": "名將招募 ×1",
+        "zh-CN": "名将招募 ×1"
+      },
+      "description": {
+        "zh-TW": "名將招募一次，計入保底",
+        "zh-CN": "名将招募一次，计入保底"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/recruit_adv_1.png",
+      "suggestedPrice": {
+        "TWD": 60
+      },
+      "maxPerOrder": 10,
+      "probabilityUrl": "https://<平台網域>/play/sanguo/api/odds/recruit_adv_1"
+    },
+    {
+      "sku": "sanguo:pack:recruit_adv_10",
+      "kind": "pack",
+      "name": {
+        "zh-TW": "名將招募 10 連",
+        "zh-CN": "名将招募 10 连"
+      },
+      "description": {
+        "zh-TW": "必得精將以上一名，計入保底",
+        "zh-CN": "必得精将以上一名，计入保底"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/recruit_adv_10.png",
+      "suggestedPrice": {
+        "TWD": 540
+      },
+      "maxPerOrder": 10,
+      "probabilityUrl": "https://<平台網域>/play/sanguo/api/odds/recruit_adv_10"
+    },
+    {
+      "sku": "sanguo:pack:recruit_normal_10",
+      "kind": "pack",
+      "name": {
+        "zh-TW": "普通招募 10 連",
+        "zh-CN": "普通招募 10 连"
+      },
+      "description": {
+        "zh-TW": "必得良將以上一名",
+        "zh-CN": "必得良将以上一名"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/recruit_normal_10.png",
+      "suggestedPrice": {
+        "TWD": 30
+      },
+      "maxPerOrder": 20,
+      "probabilityUrl": "https://<平台網域>/play/sanguo/api/odds/recruit_normal_10"
+    },
+    {
+      "sku": "sanguo:pass:monthly",
+      "kind": "pass",
+      "name": {
+        "zh-TW": "月卡特權（30 天）",
+        "zh-CN": "月卡特权（30 天）"
+      },
+      "description": {
+        "zh-TW": "30 天內：掛機收益 +20%、元寶兌換經驗、銅錢每日各 +2 次、戰鬥 3 倍速",
+        "zh-CN": "30 天内：挂机收益 +20%、元宝兑换经验、铜钱每日各 +2 次、战斗 3 倍速"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/monthly.png",
+      "suggestedPrice": {
+        "TWD": 150
+      },
+      "maxPerOrder": 12,
+      "durationDays": 30,
+      "stackable": true
+    },
+    {
+      "sku": "sanguo:bundle:first_buy",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "新手首購包",
+        "zh-CN": "新手首购包"
+      },
+      "description": {
+        "zh-TW": "紅將【趙雲】＋復活石 ×3＋軍令符 ×5",
+        "zh-CN": "红将【赵云】＋复活石 ×3＋军令符 ×5"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/first_buy.png",
+      "suggestedPrice": {
+        "TWD": 30
+      },
+      "maxPerOrder": 1,
+      "limitPerAccount": 1,
+      "contents": [
+        {
+          "sku": "sanguo:item:hero_zhaoyun",
+          "qty": 1
+        },
+        {
+          "sku": "sanguo:item:revive_3",
+          "qty": 1
+        },
+        {
+          "sku": "sanguo:item:stamina_5",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "sku": "sanguo:bundle:launch_2026",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "開服慶典包",
+        "zh-CN": "开服庆典包"
+      },
+      "description": {
+        "zh-TW": "名將招募 ×2＋銅錢 200,000＋軍令符 ×10",
+        "zh-CN": "名将招募 ×2＋铜钱 200,000＋军令符 ×10"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/launch_2026.png",
+      "suggestedPrice": {
+        "TWD": 150
+      },
+      "limitPerAccount": 3,
+      "saleEnd": "2026-11-30T15:59:59Z",
+      "contents": [
+        {
+          "sku": "sanguo:pack:recruit_adv_1",
+          "qty": 2
+        },
+        {
+          "sku": "sanguo:item:copper_200k",
+          "qty": 1
+        },
+        {
+          "sku": "sanguo:item:stamina_5",
+          "qty": 2
+        }
+      ]
+    },
+    {
+      "sku": "sanguo:bundle:growth",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "成長組合包",
+        "zh-CN": "成长组合包"
+      },
+      "description": {
+        "zh-TW": "銅錢 600,000＋經驗 300,000＋淬火石 ×20＋軍令符 ×10",
+        "zh-CN": "铜钱 600,000＋经验 300,000＋淬火石 ×20＋军令符 ×10"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/growth.png",
+      "suggestedPrice": {
+        "TWD": 300
+      },
+      "contents": [
+        {
+          "sku": "sanguo:item:copper_200k",
+          "qty": 3
+        },
+        {
+          "sku": "sanguo:item:exp_100k",
+          "qty": 3
+        },
+        {
+          "sku": "sanguo:item:temper_10",
+          "qty": 2
+        },
+        {
+          "sku": "sanguo:item:stamina_5",
+          "qty": 2
+        }
+      ]
+    },
+    {
+      "sku": "sanguo:bundle:hero_box",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "名將禮盒",
+        "zh-CN": "名将礼盒"
+      },
+      "description": {
+        "zh-TW": "名將招募 10 連 ×2＋復活石 ×6",
+        "zh-CN": "名将招募 10 连 ×2＋复活石 ×6"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/hero_box.png",
+      "suggestedPrice": {
+        "TWD": 990
+      },
+      "contents": [
+        {
+          "sku": "sanguo:pack:recruit_adv_10",
+          "qty": 2
+        },
+        {
+          "sku": "sanguo:item:revive_3",
+          "qty": 2
+        }
+      ]
+    },
+    {
+      "sku": "sanguo:item:stamina_5",
+      "kind": "item",
+      "name": {
+        "zh-TW": "軍令符 ×5",
+        "zh-CN": "军令符 ×5"
+      },
+      "description": {
+        "zh-TW": "每張使用後軍令 +60",
+        "zh-CN": "每张使用后军令 +60"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/stamina_5.png",
+      "suggestedPrice": {
+        "TWD": 30
+      }
+    },
+    {
+      "sku": "sanguo:item:revive_3",
+      "kind": "item",
+      "name": {
+        "zh-TW": "復活石 ×3",
+        "zh-CN": "复活石 ×3"
+      },
+      "description": {
+        "zh-TW": "戰敗時全員滿血復活（每場 1 次）",
+        "zh-CN": "战败时全员满血复活（每场 1 次）"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/revive_3.png",
+      "suggestedPrice": {
+        "TWD": 30
+      }
+    },
+    {
+      "sku": "sanguo:item:copper_200k",
+      "kind": "item",
+      "name": {
+        "zh-TW": "銅錢 200,000",
+        "zh-CN": "铜钱 200,000"
+      },
+      "description": {
+        "zh-TW": "升級武將、強化裝備用",
+        "zh-CN": "升级武将、强化装备用"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/copper_200k.png",
+      "suggestedPrice": {
+        "TWD": 60
+      }
+    },
+    {
+      "sku": "sanguo:item:exp_100k",
+      "kind": "item",
+      "name": {
+        "zh-TW": "經驗 100,000",
+        "zh-CN": "经验 100,000"
+      },
+      "description": {
+        "zh-TW": "升級武將用",
+        "zh-CN": "升级武将用"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/exp_100k.png",
+      "suggestedPrice": {
+        "TWD": 60
+      }
+    },
+    {
+      "sku": "sanguo:item:temper_10",
+      "kind": "item",
+      "name": {
+        "zh-TW": "淬火石 ×10",
+        "zh-CN": "淬火石 ×10"
+      },
+      "description": {
+        "zh-TW": "裝備重鑄副屬性用",
+        "zh-CN": "装备重铸副属性用"
+      },
+      "image": "https://<遊戲網域>/play/sanguo/shop/temper_10.png",
+      "suggestedPrice": {
+        "TWD": 60
+      }
+    }
+  ]
+}

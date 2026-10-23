@@ -1,0 +1,327 @@
+{
+  "gameId": "mjys",
+  "version": "2026-10-07",
+  "products": [
+    {
+      "sku": "mjys:bundle:first_buy",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "新手首購包",
+        "en": "First Purchase Pack"
+      },
+      "description": {
+        "zh-TW": "雷電塔碎片 20、高級寶箱 2、體力 60、萬能零件 5（每帳號限購一次）",
+        "en": "Lightning Tower shards x20, Rare Chest x2, Stamina x60, Universal Parts x5 (once per account)"
+      },
+      "image": "https://<遊戲方網域>/shop/first_buy.png",
+      "suggestedPrice": {
+        "TWD": 30
+      },
+      "maxPerOrder": 1,
+      "limitPerAccount": 1,
+      "contents": [
+        {
+          "sku": "mjys:content:frag_lightning",
+          "qty": 20
+        },
+        {
+          "sku": "mjys:content:chest_rare",
+          "qty": 2
+        },
+        {
+          "sku": "mjys:content:part_universal",
+          "qty": 5
+        },
+        {
+          "sku": "mjys:content:stamina",
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "sku": "mjys:pass:monthly",
+      "kind": "pass",
+      "name": {
+        "zh-TW": "月卡特權（30 天）",
+        "en": "Monthly Privileges (30 days)"
+      },
+      "description": {
+        "zh-TW": "30 天內：關卡金幣 +20%、體力購買次數 +2、商店免費刷新 +1、零件工坊次數 +1",
+        "en": "+20% stage coins, +2 stamina purchases, +1 free shop refresh, +1 workshop run for 30 days"
+      },
+      "image": "https://<遊戲方網域>/shop/monthly.png",
+      "suggestedPrice": {
+        "TWD": 150
+      },
+      "maxPerOrder": 3,
+      "durationDays": 30,
+      "stackable": true
+    },
+    {
+      "sku": "mjys:pass:weekly",
+      "kind": "pass",
+      "name": {
+        "zh-TW": "週卡特權（7 天）",
+        "en": "Weekly Privileges (7 days)"
+      },
+      "description": {
+        "zh-TW": "7 天內：關卡金幣 +10%、體力購買次數 +1",
+        "en": "+10% stage coins, +1 stamina purchase for 7 days"
+      },
+      "image": "https://<遊戲方網域>/shop/weekly.png",
+      "suggestedPrice": {
+        "TWD": 60
+      },
+      "maxPerOrder": 4,
+      "durationDays": 7,
+      "stackable": true
+    },
+    {
+      "sku": "mjys:bundle:daily",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "每日特惠",
+        "en": "Daily Deal"
+      },
+      "description": {
+        "zh-TW": "隨機零件 30、普通寶箱 2、體力 30（每日限購一次）",
+        "en": "Random Parts x30, Common Chest x2, Stamina x30 (once per day)"
+      },
+      "image": "https://<遊戲方網域>/shop/daily.png",
+      "suggestedPrice": {
+        "TWD": 30
+      },
+      "maxPerOrder": 1,
+      "contents": [
+        {
+          "sku": "mjys:content:chest_normal",
+          "qty": 2
+        },
+        {
+          "sku": "mjys:content:part_random",
+          "qty": 30
+        },
+        {
+          "sku": "mjys:content:stamina",
+          "qty": 30
+        }
+      ]
+    },
+    {
+      "sku": "mjys:bundle:weekly",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "每週特惠",
+        "en": "Weekly Deal"
+      },
+      "description": {
+        "zh-TW": "高級寶箱 3、萬能零件 10、體力 60（每週限購一次）",
+        "en": "Rare Chest x3, Universal Parts x10, Stamina x60 (once per week)"
+      },
+      "image": "https://<遊戲方網域>/shop/weekly.png",
+      "suggestedPrice": {
+        "TWD": 150
+      },
+      "maxPerOrder": 1,
+      "contents": [
+        {
+          "sku": "mjys:content:chest_rare",
+          "qty": 3
+        },
+        {
+          "sku": "mjys:content:part_universal",
+          "qty": 10
+        },
+        {
+          "sku": "mjys:content:stamina",
+          "qty": 60
+        }
+      ]
+    },
+    {
+      "sku": "mjys:bundle:monthly",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "每月特惠",
+        "en": "Monthly Deal"
+      },
+      "description": {
+        "zh-TW": "傳說寶箱 4、高級寶箱 3、萬能零件 40（每月限購一次）",
+        "en": "Legendary Chest x4, Rare Chest x3, Universal Parts x40 (once per month)"
+      },
+      "image": "https://<遊戲方網域>/shop/monthly.png",
+      "suggestedPrice": {
+        "TWD": 600
+      },
+      "maxPerOrder": 1,
+      "contents": [
+        {
+          "sku": "mjys:content:chest_legend",
+          "qty": 4
+        },
+        {
+          "sku": "mjys:content:chest_rare",
+          "qty": 3
+        },
+        {
+          "sku": "mjys:content:part_universal",
+          "qty": 40
+        }
+      ]
+    },
+    {
+      "sku": "mjys:pack:chest_rare_10",
+      "kind": "pack",
+      "name": {
+        "zh-TW": "高級寶箱 ×10",
+        "en": "Rare Chest x10"
+      },
+      "description": {
+        "zh-TW": "開 10 個高級寶箱，每個至少 1 次稀有以上",
+        "en": "10 Rare Chests, each with at least one Rare+ draw"
+      },
+      "image": "https://<遊戲方網域>/shop/chest_rare_10.png",
+      "suggestedPrice": {
+        "TWD": 300
+      },
+      "maxPerOrder": 10,
+      "probabilityUrl": "https://<平台網域>/play/mjys/odds/chest_rare_10"
+    },
+    {
+      "sku": "mjys:pack:chest_legend_1",
+      "kind": "pack",
+      "name": {
+        "zh-TW": "傳說寶箱",
+        "en": "Legendary Chest"
+      },
+      "description": {
+        "zh-TW": "每個至少 1 次史詩以上",
+        "en": "At least one Epic+ draw"
+      },
+      "image": "https://<遊戲方網域>/shop/chest_legend_1.png",
+      "suggestedPrice": {
+        "TWD": 150
+      },
+      "maxPerOrder": 10,
+      "probabilityUrl": "https://<平台網域>/play/mjys/odds/chest_legend_1"
+    },
+    {
+      "sku": "mjys:pack:chest_legend_5",
+      "kind": "pack",
+      "name": {
+        "zh-TW": "傳說寶箱 ×5",
+        "en": "Legendary Chest x5"
+      },
+      "description": {
+        "zh-TW": "5 個傳說寶箱",
+        "en": "5 Legendary Chests"
+      },
+      "image": "https://<遊戲方網域>/shop/chest_legend_5.png",
+      "suggestedPrice": {
+        "TWD": 600
+      },
+      "maxPerOrder": 10,
+      "probabilityUrl": "https://<平台網域>/play/mjys/odds/chest_legend_5"
+    },
+    {
+      "sku": "mjys:item:parts_supply",
+      "kind": "item",
+      "name": {
+        "zh-TW": "零件補給",
+        "en": "Parts Supply"
+      },
+      "description": {
+        "zh-TW": "卡組最缺的零件 ×120（每週限購兩次）",
+        "en": "x120 of the part your deck needs most (twice per week)"
+      },
+      "image": "https://<遊戲方網域>/shop/parts_supply.png",
+      "suggestedPrice": {
+        "TWD": 60
+      },
+      "maxPerOrder": 2
+    },
+    {
+      "sku": "mjys:item:universal_20",
+      "kind": "item",
+      "name": {
+        "zh-TW": "萬能零件 ×20",
+        "en": "Universal Parts x20"
+      },
+      "description": {
+        "zh-TW": "可當任何零件使用",
+        "en": "Works as any part"
+      },
+      "image": "https://<遊戲方網域>/shop/universal_20.png",
+      "suggestedPrice": {
+        "TWD": 150
+      },
+      "maxPerOrder": 10
+    },
+    {
+      "sku": "mjys:item:stamina_60",
+      "kind": "item",
+      "name": {
+        "zh-TW": "體力藥水 ×60",
+        "en": "Stamina Potion x60"
+      },
+      "description": {
+        "zh-TW": "立即回復 60 體力",
+        "en": "Restore 60 stamina"
+      },
+      "image": "https://<遊戲方網域>/shop/stamina_60.png",
+      "suggestedPrice": {
+        "TWD": 30
+      },
+      "maxPerOrder": 10
+    },
+    {
+      "sku": "mjys:item:speed3",
+      "kind": "item",
+      "name": {
+        "zh-TW": "三倍速（永久）",
+        "en": "Triple Speed (Permanent)"
+      },
+      "description": {
+        "zh-TW": "戰鬥可以開 ×3 加速（每帳號限購一次）",
+        "en": "Unlock x3 battle speed (once per account)"
+      },
+      "image": "https://<遊戲方網域>/shop/speed3.png",
+      "suggestedPrice": {
+        "TWD": 150
+      },
+      "maxPerOrder": 1,
+      "limitPerAccount": 1
+    },
+    {
+      "sku": "mjys:bundle:power_big",
+      "kind": "bundle",
+      "name": {
+        "zh-TW": "戰力豪華包",
+        "en": "Power Bundle"
+      },
+      "description": {
+        "zh-TW": "傳說寶箱 12、高級寶箱 10、萬能零件 100",
+        "en": "Legendary Chest x12, Rare Chest x10, Universal Parts x100"
+      },
+      "image": "https://<遊戲方網域>/shop/power_big.png",
+      "suggestedPrice": {
+        "TWD": 1990
+      },
+      "maxPerOrder": 5,
+      "contents": [
+        {
+          "sku": "mjys:content:chest_legend",
+          "qty": 12
+        },
+        {
+          "sku": "mjys:content:chest_rare",
+          "qty": 10
+        },
+        {
+          "sku": "mjys:content:part_universal",
+          "qty": 100
+        }
+      ]
+    }
+  ]
+}
