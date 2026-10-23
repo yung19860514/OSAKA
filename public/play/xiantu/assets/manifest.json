@@ -1,0 +1,1190 @@
+{
+ "bg_bridge.jpg": {
+  "w": 1024,
+  "h": 1024
+ },
+ "bg_side.jpg": {
+  "w": 512,
+  "h": 1024
+ },
+ "rail.png": {
+  "w": 64,
+  "h": 512
+ },
+ "hero_sword.png": {
+  "w": 461,
+  "h": 512
+ },
+ "hero_mage.png": {
+  "w": 498,
+  "h": 512
+ },
+ "boss_wolf.png": {
+  "w": 445,
+  "h": 560
+ },
+ "enemy_grunt.png": {
+  "w": 199,
+  "h": 256
+ },
+ "enemy_runner.png": {
+  "w": 126,
+  "h": 256
+ },
+ "enemy_brute.png": {
+  "w": 205,
+  "h": 256
+ },
+ "enemy_rogue.png": {
+  "w": 152,
+  "h": 256
+ },
+ "gate_blue.png": {
+  "w": 384,
+  "h": 369
+ },
+ "gate_red.png": {
+  "w": 384,
+  "h": 364
+ },
+ "gate_gold.png": {
+  "w": 384,
+  "h": 363
+ },
+ "gate_chest.png": {
+  "w": 384,
+  "h": 300
+ },
+ "fx_sword_bolt.jpg": {
+  "w": 37,
+  "h": 256
+ },
+ "fx_flying_sword.jpg": {
+  "w": 72,
+  "h": 384
+ },
+ "fx_fireball.jpg": {
+  "w": 384,
+  "h": 370
+ },
+ "fx_xuanwu.jpg": {
+  "w": 511,
+  "h": 512
+ },
+ "fx_hit.jpg": {
+  "w": 1024,
+  "h": 123,
+  "frameWidth": 128,
+  "frameHeight": 123,
+  "frames": 8
+ },
+ "fx_death.jpg": {
+  "w": 1440,
+  "h": 152,
+  "frameWidth": 160,
+  "frameHeight": 152,
+  "frames": 9
+ },
+ "fx_explosion.jpg": {
+  "w": 888,
+  "h": 115,
+  "frameWidth": 111,
+  "frameHeight": 115,
+  "frames": 8
+ },
+ "fx_thunder.jpg": {
+  "w": 336,
+  "h": 512,
+  "frameWidth": 56,
+  "frameHeight": 512,
+  "frames": 6
+ },
+ "icon_water.png": {
+  "w": 128,
+  "h": 125
+ },
+ "icon_thunder.png": {
+  "w": 128,
+  "h": 125
+ },
+ "icon_fire.png": {
+  "w": 128,
+  "h": 125
+ },
+ "icon_shield.png": {
+  "w": 128,
+  "h": 125
+ },
+ "icon_sword.png": {
+  "w": 128,
+  "h": 124
+ },
+ "icon_ice.png": {
+  "w": 128,
+  "h": 127
+ },
+ "icon_heal.png": {
+  "w": 128,
+  "h": 126
+ },
+ "icon_clone.png": {
+  "w": 128,
+  "h": 127
+ },
+ "icon_blood.png": {
+  "w": 128,
+  "h": 127
+ },
+ "icon_split.png": {
+  "w": 128,
+  "h": 126
+ },
+ "stat_multi.png": {
+  "w": 127,
+  "h": 128
+ },
+ "stat_rate.png": {
+  "w": 127,
+  "h": 128
+ },
+ "stat_dmg.png": {
+  "w": 127,
+  "h": 128
+ },
+ "stat_clone.png": {
+  "w": 127,
+  "h": 128
+ },
+ "ui_skill_button.png": {
+  "w": 251,
+  "h": 256
+ },
+ "title_win.png": {
+  "w": 640,
+  "h": 217
+ },
+ "title_lose.png": {
+  "w": 640,
+  "h": 244
+ },
+ "title_choice.png": {
+  "w": 640,
+  "h": 216
+ },
+ "title_pause.png": {
+  "w": 640,
+  "h": 253
+ },
+ "title_warning.png": {
+  "w": 640,
+  "h": 243
+ },
+ "title_breakthrough.png": {
+  "w": 640,
+  "h": 248
+ },
+ "anim_hero_fly.png": {
+  "w": 4080,
+  "h": 1200,
+  "frameWidth": 255,
+  "frameHeight": 400,
+  "frames": 46,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "anim_hero_attack.png": {
+  "w": 3768,
+  "h": 2880,
+  "frameWidth": 628,
+  "frameHeight": 360,
+  "frames": 48,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "anim_hero_idle.png": {
+  "w": 3995,
+  "h": 1080,
+  "frameWidth": 235,
+  "frameHeight": 360,
+  "frames": 46,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "anim_boss_idle.png": {
+  "w": 4069,
+  "h": 1600,
+  "frameWidth": 313,
+  "frameHeight": 400,
+  "frames": 46,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "anim_boss_attack.png": {
+  "w": 3660,
+  "h": 2400,
+  "frameWidth": 610,
+  "frameHeight": 480,
+  "frames": 26,
+  "fps": 16,
+  "loop": false,
+  "anim": true
+ },
+ "anim_brute_walk.png": {
+  "w": 4080,
+  "h": 512,
+  "frameWidth": 170,
+  "frameHeight": 256,
+  "frames": 33,
+  "fps": 20,
+  "loop": true,
+  "anim": true
+ },
+ "bg_login.jpg": {
+  "w": 720,
+  "h": 1280,
+  "boot": true
+ },
+ "logo.png": {
+  "w": 660,
+  "h": 319,
+  "boot": true
+ },
+ "hero_sword_login.png": {
+  "w": 610,
+  "h": 900
+ },
+ "btn_challenge.png": {
+  "w": 560,
+  "h": 263,
+  "boot": true
+ },
+ "bg_home.jpg": {
+  "w": 720,
+  "h": 1280
+ },
+ "hero_sword_full.png": {
+  "w": 667,
+  "h": 1000
+ },
+ "avatar_hero.png": {
+  "w": 256,
+  "h": 256
+ },
+ "ui_plaque_bar.png": {
+  "w": 600,
+  "h": 191
+ },
+ "card_secret.png": {
+  "w": 256,
+  "h": 251
+ },
+ "card_beast.png": {
+  "w": 256,
+  "h": 251
+ },
+ "ui_topbar.png": {
+  "w": 320,
+  "h": 69
+ },
+ "res_stone.png": {
+  "w": 87,
+  "h": 96
+ },
+ "res_crystal.png": {
+  "w": 87,
+  "h": 96
+ },
+ "res_coin.png": {
+  "w": 87,
+  "h": 96
+ },
+ "res_ingot.png": {
+  "w": 88,
+  "h": 96
+ },
+ "res_gourd.png": {
+  "w": 88,
+  "h": 96
+ },
+ "res_scroll.png": {
+  "w": 88,
+  "h": 96
+ },
+ "nav_home.png": {
+  "w": 108,
+  "h": 128
+ },
+ "nav_cultivate.png": {
+  "w": 102,
+  "h": 128
+ },
+ "nav_artifact.png": {
+  "w": 103,
+  "h": 128
+ },
+ "nav_skill.png": {
+  "w": 104,
+  "h": 128
+ },
+ "nav_sect.png": {
+  "w": 102,
+  "h": 128
+ },
+ "ent_event.png": {
+  "w": 93,
+  "h": 128
+ },
+ "ent_task.png": {
+  "w": 96,
+  "h": 128
+ },
+ "ent_signin.png": {
+  "w": 98,
+  "h": 128
+ },
+ "ent_mail.png": {
+  "w": 99,
+  "h": 128
+ },
+ "ent_shop.png": {
+  "w": 100,
+  "h": 128
+ },
+ "ent_rank.png": {
+  "w": 97,
+  "h": 128
+ },
+ "ent_summon.png": {
+  "w": 96,
+  "h": 128
+ },
+ "ent_gift.png": {
+  "w": 98,
+  "h": 128
+ },
+ "frame_avatar.png": {
+  "w": 156,
+  "h": 200
+ },
+ "ui_navbar.png": {
+  "w": 720,
+  "h": 109
+ },
+ "ui_navbar_glow.png": {
+  "w": 200,
+  "h": 64
+ },
+ "bg_stagemap.jpg": {
+  "w": 720,
+  "h": 1800
+ },
+ "bg_stagemap2.jpg": {
+  "w": 720,
+  "h": 1800
+ },
+ "bg_stagemap3.jpg": {
+  "w": 720,
+  "h": 1800
+ },
+ "bg_stagemap4.jpg": {
+  "w": 720,
+  "h": 1800
+ },
+ "node_cleared.png": {
+  "w": 153,
+  "h": 160
+ },
+ "node_current.png": {
+  "w": 160,
+  "h": 160
+ },
+ "node_locked.png": {
+  "w": 160,
+  "h": 160
+ },
+ "node_boss.png": {
+  "w": 160,
+  "h": 160
+ },
+ "node_star.png": {
+  "w": 160,
+  "h": 160
+ },
+ "ui_region_plaque.png": {
+  "w": 92,
+  "h": 300
+ },
+ "tab_on.png": {
+  "w": 340,
+  "h": 84
+ },
+ "tab_off.png": {
+  "w": 340,
+  "h": 78
+ },
+ "ui_back.png": {
+  "w": 128,
+  "h": 124
+ },
+ "ui_info_panel.png": {
+  "w": 560,
+  "h": 687
+ },
+ "bg_cultivate.jpg": {
+  "w": 720,
+  "h": 1280
+ },
+ "bg_skill.jpg": {
+  "w": 720,
+  "h": 1280
+ },
+ "bg_artifact.jpg": {
+  "w": 720,
+  "h": 1280
+ },
+ "hero_ult_cutin.png": {
+  "w": 900,
+  "h": 600
+ },
+ "attr_atk.png": {
+  "w": 125,
+  "h": 128
+ },
+ "attr_def.png": {
+  "w": 124,
+  "h": 128
+ },
+ "attr_hp.png": {
+  "w": 125,
+  "h": 128
+ },
+ "attr_crit.png": {
+  "w": 125,
+  "h": 128
+ },
+ "ui_slot.png": {
+  "w": 200,
+  "h": 199
+ },
+ "ui_pause.png": {
+  "w": 126,
+  "h": 128
+ },
+ "ui_hpbar.png": {
+  "w": 520,
+  "h": 120
+ },
+ "fx_gate_break.jpg": {
+  "w": 1512,
+  "h": 256,
+  "frameWidth": 189,
+  "frameHeight": 256,
+  "frames": 8
+ },
+ "fx_pickup.jpg": {
+  "w": 712,
+  "h": 256,
+  "frameWidth": 89,
+  "frameHeight": 256,
+  "frames": 8
+ },
+ "anim_hero_meditate.png": {
+  "w": 3864,
+  "h": 1520,
+  "frameWidth": 322,
+  "frameHeight": 380,
+  "frames": 38,
+  "fps": 10,
+  "loop": true,
+  "anim": true
+ },
+ "fx_breakthrough.jpg": {
+  "w": 4037,
+  "h": 1280,
+  "frameWidth": 367,
+  "frameHeight": 640,
+  "frames": 16,
+  "fps": 12,
+  "loop": false,
+  "anim": true
+ },
+ "art_sword.png": {
+  "w": 128,
+  "h": 128
+ },
+ "art_talisman.png": {
+  "w": 128,
+  "h": 127
+ },
+ "art_gourd.png": {
+  "w": 128,
+  "h": 128
+ },
+ "art_robe.png": {
+  "w": 128,
+  "h": 125
+ },
+ "art_mirror.png": {
+  "w": 127,
+  "h": 128
+ },
+ "art_flysword.png": {
+  "w": 128,
+  "h": 127
+ },
+ "art_pendant.png": {
+  "w": 127,
+  "h": 128
+ },
+ "art_cauldron.png": {
+  "w": 128,
+  "h": 128
+ },
+ "hero_fly_still.png": {
+  "w": 334,
+  "h": 600
+ },
+ "r_lian.png": {
+  "w": 125,
+  "h": 120
+ },
+ "r_qi.png": {
+  "w": 124,
+  "h": 120
+ },
+ "r_zhu.png": {
+  "w": 130,
+  "h": 120
+ },
+ "r_ji.png": {
+  "w": 134,
+  "h": 120
+ },
+ "r_jin.png": {
+  "w": 135,
+  "h": 120
+ },
+ "r_dan.png": {
+  "w": 132,
+  "h": 120
+ },
+ "r_yuan.png": {
+  "w": 156,
+  "h": 120
+ },
+ "r_ying.png": {
+  "w": 131,
+  "h": 120
+ },
+ "r_hua.png": {
+  "w": 150,
+  "h": 120
+ },
+ "r_shen.png": {
+  "w": 121,
+  "h": 120
+ },
+ "r_qi2.png": {
+  "w": 127,
+  "h": 120
+ },
+ "r_jing.png": {
+  "w": 127,
+  "h": 120
+ },
+ "l_1.png": {
+  "w": 238,
+  "h": 120
+ },
+ "l_2.png": {
+  "w": 175,
+  "h": 120
+ },
+ "l_3.png": {
+  "w": 152,
+  "h": 120
+ },
+ "l_4.png": {
+  "w": 164,
+  "h": 120
+ },
+ "l_5.png": {
+  "w": 141,
+  "h": 120
+ },
+ "l_6.png": {
+  "w": 131,
+  "h": 120
+ },
+ "l_7.png": {
+  "w": 139,
+  "h": 120
+ },
+ "l_8.png": {
+  "w": 161,
+  "h": 120
+ },
+ "l_9.png": {
+  "w": 131,
+  "h": 120
+ },
+ "l_10.png": {
+  "w": 123,
+  "h": 120
+ },
+ "l_ceng.png": {
+  "w": 123,
+  "h": 120
+ },
+ "g_wan.png": {
+  "w": 207,
+  "h": 200
+ },
+ "g_mei.png": {
+  "w": 198,
+  "h": 200
+ },
+ "g_you.png": {
+  "w": 216,
+  "h": 200
+ },
+ "g_liang.png": {
+  "w": 194,
+  "h": 200
+ },
+ "w_combo.png": {
+  "w": 273,
+  "h": 140
+ },
+ "w_crit.png": {
+  "w": 279,
+  "h": 140
+ },
+ "w_kill.png": {
+  "w": 259,
+  "h": 140
+ },
+ "w_dodge.png": {
+  "w": 295,
+  "h": 140
+ },
+ "font_gold.png": {
+  "w": 768,
+  "h": 96,
+  "font": true,
+  "cw": 64,
+  "ch": 96,
+  "n": 12
+ },
+ "font_crit.png": {
+  "w": 684,
+  "h": 96,
+  "font": true,
+  "cw": 57,
+  "ch": 96,
+  "n": 12
+ },
+ "font_super.png": {
+  "w": 816,
+  "h": 96,
+  "font": true,
+  "cw": 68,
+  "ch": 96,
+  "n": 12
+ },
+ "bg_bridge2.jpg": {
+  "w": 1024,
+  "h": 1024
+ },
+ "bg_side2.jpg": {
+  "w": 512,
+  "h": 1024
+ },
+ "rail2.png": {
+  "w": 64,
+  "h": 512
+ },
+ "bg_bridge3.jpg": {
+  "w": 1024,
+  "h": 1024
+ },
+ "bg_side3.jpg": {
+  "w": 512,
+  "h": 1024
+ },
+ "rail3.png": {
+  "w": 64,
+  "h": 512
+ },
+ "bg_bridge4.jpg": {
+  "w": 1024,
+  "h": 1024
+ },
+ "bg_side4.jpg": {
+  "w": 512,
+  "h": 1024
+ },
+ "rail4.png": {
+  "w": 64,
+  "h": 512
+ },
+ "txt_start.png": {
+  "w": 518,
+  "h": 160,
+  "boot": true
+ },
+ "txt_challenge.png": {
+  "w": 297,
+  "h": 160
+ },
+ "txt_begin.png": {
+  "w": 520,
+  "h": 156
+ },
+ "font_stage.png": {
+  "w": 780,
+  "h": 96,
+  "font": true,
+  "cw": 65,
+  "ch": 96,
+  "n": 12
+ },
+ "title_supercrit.png": {
+  "w": 360,
+  "h": 125
+ },
+ "ui_popup.png": {
+  "w": 680,
+  "h": 1021
+ },
+ "ui_close.png": {
+  "w": 128,
+  "h": 124
+ },
+ "btn_gold.png": {
+  "w": 400,
+  "h": 114
+ },
+ "btn_blue.png": {
+  "w": 400,
+  "h": 114
+ },
+ "btn_red.png": {
+  "w": 400,
+  "h": 114
+ },
+ "m_task.png": {
+  "w": 98,
+  "h": 112
+ },
+ "m_sign.png": {
+  "w": 98,
+  "h": 112
+ },
+ "m_mail.png": {
+  "w": 98,
+  "h": 112
+ },
+ "m_gift.png": {
+  "w": 98,
+  "h": 112
+ },
+ "m_gold.png": {
+  "w": 98,
+  "h": 112
+ },
+ "m_silver.png": {
+  "w": 98,
+  "h": 112
+ },
+ "m_bronze.png": {
+  "w": 98,
+  "h": 112
+ },
+ "m_gourd.png": {
+  "w": 98,
+  "h": 112
+ },
+ "sign_card.png": {
+  "w": 210,
+  "h": 220
+ },
+ "sign_done.png": {
+  "w": 210,
+  "h": 220
+ },
+ "bg_shop.jpg": {
+  "w": 720,
+  "h": 1280
+ },
+ "bg_event.jpg": {
+  "w": 720,
+  "h": 1280
+ },
+ "nav2_home.png": {
+  "w": 128,
+  "h": 121
+ },
+ "nav2_cultivate.png": {
+  "w": 128,
+  "h": 122
+ },
+ "nav2_artifact.png": {
+  "w": 128,
+  "h": 122
+ },
+ "nav2_skill.png": {
+  "w": 128,
+  "h": 114
+ },
+ "nav2_sect.png": {
+  "w": 127,
+  "h": 128
+ },
+ "nav2_home_off.png": {
+  "w": 128,
+  "h": 123
+ },
+ "nav2_cultivate_off.png": {
+  "w": 126,
+  "h": 128
+ },
+ "nav2_artifact_off.png": {
+  "w": 128,
+  "h": 124
+ },
+ "nav2_skill_off.png": {
+  "w": 128,
+  "h": 114
+ },
+ "nav2_sect_off.png": {
+  "w": 128,
+  "h": 128
+ },
+ "ui_navbar2.png": {
+  "w": 720,
+  "h": 72
+ },
+ "ui_navbar2_glow.png": {
+  "w": 240,
+  "h": 43
+ },
+ "ui_task_row.png": {
+  "w": 620,
+  "h": 159
+ },
+ "stamp_claimed.png": {
+  "w": 200,
+  "h": 172
+ },
+ "ui_power.png": {
+  "w": 300,
+  "h": 88
+ },
+ "sheet_bat.png": {
+  "w": 1432,
+  "h": 200,
+  "frameWidth": 179,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_boss_ch2.png": {
+  "w": 1648,
+  "h": 380,
+  "frameWidth": 206,
+  "frameHeight": 380,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_boss_ch3.png": {
+  "w": 1576,
+  "h": 380,
+  "frameWidth": 197,
+  "frameHeight": 380,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_boss_ch4.png": {
+  "w": 1688,
+  "h": 380,
+  "frameWidth": 211,
+  "frameHeight": 380,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_foxmage.png": {
+  "w": 824,
+  "h": 200,
+  "frameWidth": 103,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_golem.png": {
+  "w": 984,
+  "h": 200,
+  "frameWidth": 123,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_grunt.png": {
+  "w": 984,
+  "h": 200,
+  "frameWidth": 123,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_rogue.png": {
+  "w": 928,
+  "h": 200,
+  "frameWidth": 116,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_runner.png": {
+  "w": 888,
+  "h": 200,
+  "frameWidth": 111,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_skeleton.png": {
+  "w": 792,
+  "h": 200,
+  "frameWidth": 99,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_snake.png": {
+  "w": 832,
+  "h": 200,
+  "frameWidth": 104,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "sheet_treant.png": {
+  "w": 864,
+  "h": 200,
+  "frameWidth": 108,
+  "frameHeight": 200,
+  "frames": 8,
+  "fps": 12,
+  "loop": true,
+  "anim": true
+ },
+ "ally_master.png": {
+  "w": 683,
+  "h": 1024
+ },
+ "ally_master_cast.png": {
+  "w": 683,
+  "h": 1024
+ },
+ "fx_master_seal.jpg": {
+  "w": 512,
+  "h": 508
+ },
+ "fx_master_sword.jpg": {
+  "w": 220,
+  "h": 768
+ },
+ "fx_aw_water.jpg": {
+  "w": 4081,
+  "h": 1920,
+  "frameWidth": 371,
+  "frameHeight": 640,
+  "frames": 24,
+  "fps": 10,
+  "loop": false,
+  "anim": true
+ },
+ "fx_aw_thunder.jpg": {
+  "w": 3971,
+  "h": 1920,
+  "frameWidth": 361,
+  "frameHeight": 640,
+  "frames": 24,
+  "fps": 10,
+  "loop": false,
+  "anim": true
+ },
+ "fx_aw_fire.jpg": {
+  "w": 3971,
+  "h": 1920,
+  "frameWidth": 361,
+  "frameHeight": 640,
+  "frames": 24,
+  "fps": 10,
+  "loop": false,
+  "anim": true
+ },
+ "fx_aw_shield.jpg": {
+  "w": 3971,
+  "h": 1920,
+  "frameWidth": 361,
+  "frameHeight": 640,
+  "frames": 24,
+  "fps": 10,
+  "loop": false,
+  "anim": true
+ },
+ "fx_boss_revive.jpg": {
+  "w": 3971,
+  "h": 1920,
+  "frameWidth": 361,
+  "frameHeight": 640,
+  "frames": 24,
+  "fps": 10,
+  "loop": false,
+  "anim": true
+ },
+ "fx_aw_sword.jpg": {
+  "w": 3971,
+  "h": 1920,
+  "frameWidth": 361,
+  "frameHeight": 640,
+  "frames": 24,
+  "fps": 10,
+  "loop": false,
+  "anim": true
+ },
+ "fx_atk_water.jpg": {
+  "w": 2676,
+  "h": 384,
+  "frameWidth": 223,
+  "frameHeight": 384,
+  "frames": 12,
+  "fps": 14,
+  "loop": true,
+  "anim": true
+ },
+ "fx_atk_fire.jpg": {
+  "w": 2652,
+  "h": 384,
+  "frameWidth": 221,
+  "frameHeight": 384,
+  "frames": 12,
+  "fps": 14,
+  "loop": true,
+  "anim": true
+ },
+ "fx_atk_thunder.jpg": {
+  "w": 4074,
+  "h": 512,
+  "frameWidth": 291,
+  "frameHeight": 512,
+  "frames": 14,
+  "fps": 16,
+  "loop": false,
+  "anim": true
+ },
+ "fx_atk_fire_boom.jpg": {
+  "w": 3809,
+  "h": 1024,
+  "frameWidth": 293,
+  "frameHeight": 512,
+  "frames": 14,
+  "fps": 16,
+  "loop": false,
+  "anim": true
+ },
+ "fx_atk_sword.jpg": {
+  "w": 3861,
+  "h": 1024,
+  "frameWidth": 297,
+  "frameHeight": 512,
+  "frames": 14,
+  "fps": 16,
+  "loop": false,
+  "anim": true
+ },
+ "fx_master_sword_s.jpg": {
+  "w": 38,
+  "h": 256
+ },
+ "fx_master_palm_anim.jpg": {
+  "w": 3971,
+  "h": 1920,
+  "frameWidth": 361,
+  "frameHeight": 640,
+  "frames": 24,
+  "fps": 10,
+  "loop": false,
+  "anim": true
+ },
+ "diff_badge_0.png": {
+  "w": 252,
+  "h": 256
+ },
+ "diff_badge_1.png": {
+  "w": 251,
+  "h": 256
+ },
+ "diff_badge_2.png": {
+  "w": 251,
+  "h": 256
+ },
+ "diff_badge_3.png": {
+  "w": 251,
+  "h": 256
+ },
+ "diff_badge_4.png": {
+  "w": 252,
+  "h": 256
+ },
+ "diff_badge_lock.png": {
+  "w": 252,
+  "h": 256
+ },
+ "icon_skill_heal.png": {
+  "w": 256,
+  "h": 256
+ },
+ "fx_heal.jpg": {
+  "w": 4004,
+  "h": 1024,
+  "frameWidth": 286,
+  "frameHeight": 512,
+  "frames": 16,
+  "fps": 12,
+  "loop": false,
+  "anim": true
+ },
+ "ent_idle.png": {
+  "w": 255,
+  "h": 256
+ }
+}
