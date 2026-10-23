@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>仙途问道</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0f18; overflow: hidden; touch-action: none; }
+  #game { width: 100%; height: 100%; }
+  #boot { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #cfd8e8; font: 20px sans-serif; }
+</style>
+</head>
+<body>
+<div id="boot">载入字体…</div>
+<div id="game"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+<script>
+  // 書法字（马善政）＋內文（思源宋体）：只抓 game.js 裡用到的字，檔案很小
+  // 注意：Google Fonts 在中国大陆连不上，正式版要改成自己架字体
+  (async () => {
+    const v = Date.now();
+    let chars = '';
+    try {
+      const src = await (await fetch('game.js?v=' + v)).text();
+      chars = [...new Set(src.match(/[　-〿一-鿿＀-￯]/g) || [])].join('');
+    } catch (e) { /* 抓不到就用整套字 */ }
+    const extra = '0123456789+-%/.,:×·ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ';
+    const add = (family) => {
+      const l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=' + family + '&display=block' + (chars ? '&text=' + encodeURIComponent(chars + extra) : '');
+      document.head.appendChild(l);
+      return new Promise(r => { l.onload = r; l.onerror = r; });
+    };
+    try {
+      await Promise.race([
+        Promise.all([add('Ma+Shan+Zheng'), add('Noto+Serif+SC:wght@700;900'), add('ZCOOL+XiaoWei')]).then(() => Promise.all([document.fonts.load('40px "Ma Shan Zheng"', '仙途问道'), document.fonts.load('700 20px "Noto Serif SC"', '仙途问道'), document.fonts.load('24px "ZCOOL XiaoWei"', '第关')])),
+        new Promise(r => setTimeout(r, 6000)),
+      ]);
+    } catch (e) { /* 字体失败就用系统字 */ }
+    document.getElementById('boot').remove();
+    const s = document.createElement('script');
+    s.src = 'game.js?v=' + v;
+    document.body.appendChild(s);
+  })();
+</script>
+</body>
+</html>
