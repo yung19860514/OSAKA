@@ -1,0 +1,605 @@
+{
+ "images": {
+  "bg_battle_ch1": "bg_battle_ch1.jpg",
+  "bg_battle_ch2": "bg_battle_ch2.jpg",
+  "bg_battle_ch3": "bg_battle_ch3.jpg",
+  "bg_battle_ch4": "bg_battle_ch4.jpg",
+  "bg_battle_ch5": "bg_battle_ch5.jpg",
+  "bg_battle_ch6": "bg_battle_ch6.jpg",
+  "bg_defeat": "bg_defeat.jpg",
+  "bg_event": "bg_event.jpg",
+  "bg_fortress": "bg_fortress.jpg",
+  "bg_home": "bg_home.jpg",
+  "bg_login": "bg_login.jpg",
+  "bg_map_ch1": "bg_map_ch1.jpg",
+  "bg_map_ch2": "bg_map_ch2.jpg",
+  "bg_map_ch3": "bg_map_ch3.jpg",
+  "bg_map_ch4": "bg_map_ch4.jpg",
+  "bg_map_ch5": "bg_map_ch5.jpg",
+  "bg_map_ch6": "bg_map_ch6.jpg",
+  "bg_shop": "bg_shop.jpg",
+  "bg_tower": "bg_tower.jpg",
+  "bg_victory": "bg_victory.jpg",
+  "fx_flame_cone": "fx_flame_cone.webp",
+  "fx_gate_hit": "fx_gate_hit.webp",
+  "fx_holy_ring": "fx_holy_ring.webp",
+  "fx_levelup_sheet": "fx_levelup_sheet.webp",
+  "fx_lightning_chain_0": "fx_lightning_chain_0.webp",
+  "fx_lightning_chain_1": "fx_lightning_chain_1.webp",
+  "fx_lightning_chain_2": "fx_lightning_chain_2.webp",
+  "fx_poison_cloud": "fx_poison_cloud.webp",
+  "fx_projectiles_0": "fx_projectiles_0.webp",
+  "fx_projectiles_1": "fx_projectiles_1.webp",
+  "fx_projectiles_2": "fx_projectiles_2.webp",
+  "fx_projectiles_3": "fx_projectiles_3.webp",
+  "fx_projectiles_4": "fx_projectiles_4.webp",
+  "fx_projectiles_5": "fx_projectiles_5.webp",
+  "fx_time_stop": "fx_time_stop.webp",
+  "icon_achievements_0": "icon_achievements_0.webp",
+  "icon_achievements_1": "icon_achievements_1.webp",
+  "icon_achievements_2": "icon_achievements_2.webp",
+  "icon_achievements_3": "icon_achievements_3.webp",
+  "icon_app_0": "icon_app_0.webp",
+  "icon_buildings_0": "icon_buildings_0.webp",
+  "icon_buildings_1": "icon_buildings_1.webp",
+  "icon_buildings_2": "icon_buildings_2.webp",
+  "icon_buildings_3": "icon_buildings_3.webp",
+  "icon_chests_0": "icon_chests_0.webp",
+  "icon_chests_1": "icon_chests_1.webp",
+  "icon_chests_2": "icon_chests_2.webp",
+  "icon_chests_3": "icon_chests_3.webp",
+  "icon_chests_4": "icon_chests_4.webp",
+  "icon_chests_5": "icon_chests_5.webp",
+  "icon_currency_0": "icon_currency_0.webp",
+  "icon_currency_1": "icon_currency_1.webp",
+  "icon_currency_2": "icon_currency_2.webp",
+  "icon_currency_3": "icon_currency_3.webp",
+  "icon_currency_4": "icon_currency_4.webp",
+  "icon_fragments_0": "icon_fragments_0.webp",
+  "icon_fragments_1": "icon_fragments_1.webp",
+  "icon_fragments_2": "icon_fragments_2.webp",
+  "icon_fragments_3": "icon_fragments_3.webp",
+  "icon_items_0": "icon_items_0.webp",
+  "icon_items_1": "icon_items_1.webp",
+  "icon_items_2": "icon_items_2.webp",
+  "icon_items_3": "icon_items_3.webp",
+  "icon_items_4": "icon_items_4.webp",
+  "icon_items_5": "icon_items_5.webp",
+  "icon_items_6": "icon_items_6.webp",
+  "icon_items_7": "icon_items_7.webp",
+  "icon_packs_0": "icon_packs_0.webp",
+  "icon_packs_1": "icon_packs_1.webp",
+  "icon_packs_2": "icon_packs_2.webp",
+  "icon_packs_3": "icon_packs_3.webp",
+  "icon_packs_4": "icon_packs_4.webp",
+  "icon_packs_5": "icon_packs_5.webp",
+  "icon_packs_6": "icon_packs_6.webp",
+  "icon_packs_7": "icon_packs_7.webp",
+  "icon_parts_0": "icon_parts_0.webp",
+  "icon_parts_1": "icon_parts_1.webp",
+  "icon_parts_2": "icon_parts_2.webp",
+  "icon_parts_3": "icon_parts_3.webp",
+  "icon_parts_4": "icon_parts_4.webp",
+  "logo_0": "logo_0.webp",
+  "num_damage_0": "num_damage_0.webp",
+  "num_damage_1": "num_damage_1.webp",
+  "num_damage_2": "num_damage_2.webp",
+  "num_damage_3": "num_damage_3.webp",
+  "num_damage_4": "num_damage_4.webp",
+  "num_damage_5": "num_damage_5.webp",
+  "num_damage_6": "num_damage_6.webp",
+  "num_damage_7": "num_damage_7.webp",
+  "num_damage_8": "num_damage_8.webp",
+  "num_damage_9": "num_damage_9.webp",
+  "num_damage_10": "num_damage_10.webp",
+  "num_damage_11": "num_damage_11.webp",
+  "num_damage_12": "num_damage_12.webp",
+  "num_damage_13": "num_damage_13.webp",
+  "num_damage_14": "num_damage_14.webp",
+  "num_damage_15": "num_damage_15.webp",
+  "num_damage_16": "num_damage_16.webp",
+  "num_damage_17": "num_damage_17.webp",
+  "num_damage_18": "num_damage_18.webp",
+  "num_damage_19": "num_damage_19.webp",
+  "num_damage_20": "num_damage_20.webp",
+  "num_damage_21": "num_damage_21.webp",
+  "num_damage_22": "num_damage_22.webp",
+  "num_damage_23": "num_damage_23.webp",
+  "num_damage_24": "num_damage_24.webp",
+  "num_damage_25": "num_damage_25.webp",
+  "portraits_a_0": "portraits_a_0.webp",
+  "portraits_a_1": "portraits_a_1.webp",
+  "portraits_a_2": "portraits_a_2.webp",
+  "portraits_a_3": "portraits_a_3.webp",
+  "portraits_b_0": "portraits_b_0.webp",
+  "portraits_b_1": "portraits_b_1.webp",
+  "portraits_b_2": "portraits_b_2.webp",
+  "portraits_b_3": "portraits_b_3.webp",
+  "portraits_c_0": "portraits_c_0.webp",
+  "portraits_c_1": "portraits_c_1.webp",
+  "txt_battle_0": "txt_battle_0.webp",
+  "txt_battle_1": "txt_battle_1.webp",
+  "txt_battle_2": "txt_battle_2.webp",
+  "txt_battle_3": "txt_battle_3.webp",
+  "txt_chapters_0": "txt_chapters_0.webp",
+  "txt_chapters_1": "txt_chapters_1.webp",
+  "txt_chapters_2": "txt_chapters_2.webp",
+  "txt_chapters_3": "txt_chapters_3.webp",
+  "txt_chapters_4": "txt_chapters_4.webp",
+  "txt_chapters_5": "txt_chapters_5.webp",
+  "ui_bars_0": "ui_bars_0.webp",
+  "ui_bars_1": "ui_bars_1.webp",
+  "ui_bars_2": "ui_bars_2.webp",
+  "ui_bars_3": "ui_bars_3.webp",
+  "ui_bars_4": "ui_bars_4.webp",
+  "ui_bars_5": "ui_bars_5.webp",
+  "ui_bars_6": "ui_bars_6.webp",
+  "ui_bars_7": "ui_bars_7.webp",
+  "ui_buttons_0": "ui_buttons_0.webp",
+  "ui_buttons_1": "ui_buttons_1.webp",
+  "ui_buttons_2": "ui_buttons_2.webp",
+  "ui_buttons_3": "ui_buttons_3.webp",
+  "ui_buttons_4": "ui_buttons_4.webp",
+  "ui_buttons_5": "ui_buttons_5.webp",
+  "ui_buttons_round_0": "ui_buttons_round_0.webp",
+  "ui_buttons_round_1": "ui_buttons_round_1.webp",
+  "ui_buttons_round_2": "ui_buttons_round_2.webp",
+  "ui_buttons_round_3": "ui_buttons_round_3.webp",
+  "ui_buttons_round_4": "ui_buttons_round_4.webp",
+  "ui_chapter_banner_0": "ui_chapter_banner_0.webp",
+  "ui_gate_0": "ui_gate_0.webp",
+  "ui_gate_1": "ui_gate_1.webp",
+  "ui_gate_2": "ui_gate_2.webp",
+  "ui_misc_0": "ui_misc_0.webp",
+  "ui_misc_1": "ui_misc_1.webp",
+  "ui_misc_2": "ui_misc_2.webp",
+  "ui_misc_3": "ui_misc_3.webp",
+  "ui_misc_4": "ui_misc_4.webp",
+  "ui_misc_5": "ui_misc_5.webp",
+  "ui_misc_6": "ui_misc_6.webp",
+  "ui_misc_7": "ui_misc_7.webp",
+  "ui_misc_8": "ui_misc_8.webp",
+  "ui_misc_9": "ui_misc_9.webp",
+  "ui_misc_10": "ui_misc_10.webp",
+  "ui_misc_11": "ui_misc_11.webp",
+  "ui_misc_12": "ui_misc_12.webp",
+  "ui_nav_0": "ui_nav_0.webp",
+  "ui_nav_1": "ui_nav_1.webp",
+  "ui_nav_2": "ui_nav_2.webp",
+  "ui_nav_3": "ui_nav_3.webp",
+  "ui_nav_4": "ui_nav_4.webp",
+  "ui_panels_0": "ui_panels_0.webp",
+  "ui_panels_1": "ui_panels_1.webp",
+  "ui_panels_2": "ui_panels_2.webp",
+  "ui_panels_3": "ui_panels_3.webp",
+  "ui_popup_0": "ui_popup_0.webp",
+  "ui_rarity_frames_0": "ui_rarity_frames_0.webp",
+  "ui_rarity_frames_1": "ui_rarity_frames_1.webp",
+  "ui_rarity_frames_2": "ui_rarity_frames_2.webp",
+  "ui_rarity_frames_3": "ui_rarity_frames_3.webp",
+  "ui_season_card_0": "ui_season_card_0.webp",
+  "ui_side_icons_a_0": "ui_side_icons_a_0.webp",
+  "ui_side_icons_a_1": "ui_side_icons_a_1.webp",
+  "ui_side_icons_a_2": "ui_side_icons_a_2.webp",
+  "ui_side_icons_a_3": "ui_side_icons_a_3.webp",
+  "ui_side_icons_a_4": "ui_side_icons_a_4.webp",
+  "ui_side_icons_a_5": "ui_side_icons_a_5.webp",
+  "ui_side_icons_a_6": "ui_side_icons_a_6.webp",
+  "ui_side_icons_a_7": "ui_side_icons_a_7.webp",
+  "ui_side_icons_b_0": "ui_side_icons_b_0.webp",
+  "ui_side_icons_b_1": "ui_side_icons_b_1.webp",
+  "ui_side_icons_b_2": "ui_side_icons_b_2.webp",
+  "ui_side_icons_b_3": "ui_side_icons_b_3.webp",
+  "ui_side_icons_b_4": "ui_side_icons_b_4.webp",
+  "ui_side_icons_b_5": "ui_side_icons_b_5.webp",
+  "ui_side_icons_b_6": "ui_side_icons_b_6.webp",
+  "ui_side_icons_b_7": "ui_side_icons_b_7.webp",
+  "ui_stage_nodes_0": "ui_stage_nodes_0.webp",
+  "ui_stage_nodes_1": "ui_stage_nodes_1.webp",
+  "ui_stage_nodes_2": "ui_stage_nodes_2.webp",
+  "ui_stage_nodes_3": "ui_stage_nodes_3.webp",
+  "ui_stamp_0": "ui_stamp_0.webp",
+  "ui_stamp_1": "ui_stamp_1.webp",
+  "ui_stamp_2": "ui_stamp_2.webp",
+  "ui_tiles_0": "ui_tiles_0.webp",
+  "ui_tiles_1": "ui_tiles_1.webp",
+  "ui_tiles_2": "ui_tiles_2.webp",
+  "ui_tiles_3": "ui_tiles_3.webp",
+  "ui_topbar_0": "ui_topbar_0.webp",
+  "ui_topbar_1": "ui_topbar_1.webp",
+  "ui_topbar_2": "ui_topbar_2.webp",
+  "ui_topbar_3": "ui_topbar_3.webp"
+ },
+ "sheets": {
+  "anim_captain_borg": {
+   "file": "anim_captain_borg.webp",
+   "w": 292,
+   "h": 440,
+   "frames": 40,
+   "fps": 10,
+   "loop": true,
+   "yoyo": true
+  },
+  "anim_captain_borg_skill": {
+   "file": "anim_captain_borg_skill.webp",
+   "w": 269,
+   "h": 440,
+   "frames": 48,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false
+  },
+  "anim_captain_elsa": {
+   "file": "anim_captain_elsa.webp",
+   "w": 336,
+   "h": 440,
+   "frames": 40,
+   "fps": 10,
+   "loop": true,
+   "yoyo": true
+  },
+  "anim_captain_elsa_skill": {
+   "file": "anim_captain_elsa_skill.webp",
+   "w": 248,
+   "h": 440,
+   "frames": 48,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false
+  },
+  "anim_captain_karl": {
+   "file": "anim_captain_karl.webp",
+   "w": 271,
+   "h": 440,
+   "frames": 40,
+   "fps": 10,
+   "loop": true,
+   "yoyo": true
+  },
+  "anim_captain_karl_skill": {
+   "file": "anim_captain_karl_skill.webp",
+   "w": 289,
+   "h": 440,
+   "frames": 48,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false
+  },
+  "anim_captain_lia": {
+   "file": "anim_captain_lia.webp",
+   "w": 278,
+   "h": 440,
+   "frames": 40,
+   "fps": 10,
+   "loop": true,
+   "yoyo": true
+  },
+  "anim_captain_lia_skill": {
+   "file": "anim_captain_lia_skill.webp",
+   "w": 278,
+   "h": 440,
+   "frames": 48,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false
+  },
+  "anim_fx_hit": {
+   "file": "anim_fx_hit.webp",
+   "w": 360,
+   "h": 309,
+   "frames": 22,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false,
+   "fx": true
+  },
+  "anim_fx_ice": {
+   "file": "anim_fx_ice.webp",
+   "w": 360,
+   "h": 203,
+   "frames": 30,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false,
+   "fx": true
+  },
+  "anim_fx_levelup": {
+   "file": "anim_fx_levelup.webp",
+   "w": 360,
+   "h": 360,
+   "frames": 30,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false,
+   "fx": true
+  },
+  "anim_fx_merge": {
+   "file": "anim_fx_merge.webp",
+   "w": 360,
+   "h": 240,
+   "frames": 30,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false,
+   "fx": true
+  },
+  "anim_fx_skill": {
+   "file": "anim_fx_skill.webp",
+   "w": 360,
+   "h": 360,
+   "frames": 19,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false,
+   "fx": true
+  },
+  "anim_fx_summon": {
+   "file": "anim_fx_summon.webp",
+   "w": 360,
+   "h": 242,
+   "frames": 17,
+   "fps": 12,
+   "loop": false,
+   "yoyo": false,
+   "fx": true
+  },
+  "captain_borg": {
+   "file": "captain_borg.webp",
+   "w": 247,
+   "h": 420,
+   "frames": 8
+  },
+  "captain_borg_stand": {
+   "file": "captain_borg_stand.webp",
+   "w": 395,
+   "h": 600,
+   "frames": 1
+  },
+  "captain_elsa": {
+   "file": "captain_elsa.webp",
+   "w": 240,
+   "h": 420,
+   "frames": 8
+  },
+  "captain_elsa_stand": {
+   "file": "captain_elsa_stand.webp",
+   "w": 462,
+   "h": 600,
+   "frames": 1
+  },
+  "captain_karl": {
+   "file": "captain_karl.webp",
+   "w": 179,
+   "h": 420,
+   "frames": 8
+  },
+  "captain_karl_stand": {
+   "file": "captain_karl_stand.webp",
+   "w": 347,
+   "h": 600,
+   "frames": 1
+  },
+  "captain_lia": {
+   "file": "captain_lia.webp",
+   "w": 227,
+   "h": 420,
+   "frames": 8
+  },
+  "captain_lia_stand": {
+   "file": "captain_lia_stand.webp",
+   "w": 337,
+   "h": 600,
+   "frames": 1
+  },
+  "fx_hit_sheet": {
+   "file": "fx_hit_sheet.webp",
+   "w": 183,
+   "h": 256,
+   "frames": 8
+  },
+  "fx_ice_sheet": {
+   "file": "fx_ice_sheet.webp",
+   "w": 163,
+   "h": 256,
+   "frames": 8
+  },
+  "fx_merge_sheet": {
+   "file": "fx_merge_sheet.webp",
+   "w": 204,
+   "h": 256,
+   "frames": 8
+  },
+  "fx_skill_sheet": {
+   "file": "fx_skill_sheet.webp",
+   "w": 170,
+   "h": 256,
+   "frames": 8
+  },
+  "fx_summon_sheet": {
+   "file": "fx_summon_sheet.webp",
+   "w": 147,
+   "h": 256,
+   "frames": 8
+  },
+  "sheet_bat": {
+   "file": "sheet_bat.webp",
+   "w": 184,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_boss_frostgiant": {
+   "file": "sheet_boss_frostgiant.webp",
+   "w": 171,
+   "h": 300,
+   "frames": 8
+  },
+  "sheet_boss_goblinking": {
+   "file": "sheet_boss_goblinking.webp",
+   "w": 157,
+   "h": 300,
+   "frames": 8
+  },
+  "sheet_boss_lavademon": {
+   "file": "sheet_boss_lavademon.webp",
+   "w": 165,
+   "h": 300,
+   "frames": 8
+  },
+  "sheet_boss_pirate": {
+   "file": "sheet_boss_pirate.webp",
+   "w": 181,
+   "h": 300,
+   "frames": 8
+  },
+  "sheet_boss_shadowking": {
+   "file": "sheet_boss_shadowking.webp",
+   "w": 166,
+   "h": 300,
+   "frames": 8
+  },
+  "sheet_boss_witch": {
+   "file": "sheet_boss_witch.webp",
+   "w": 174,
+   "h": 300,
+   "frames": 8
+  },
+  "sheet_goblin": {
+   "file": "sheet_goblin.webp",
+   "w": 137,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_goblin_archer": {
+   "file": "sheet_goblin_archer.webp",
+   "w": 132,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_icewolf": {
+   "file": "sheet_icewolf.webp",
+   "w": 144,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_lavagolem": {
+   "file": "sheet_lavagolem.webp",
+   "w": 147,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_lavaimp": {
+   "file": "sheet_lavaimp.webp",
+   "w": 140,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_mummy": {
+   "file": "sheet_mummy.webp",
+   "w": 148,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_mushroom": {
+   "file": "sheet_mushroom.webp",
+   "w": 166,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_skeleton": {
+   "file": "sheet_skeleton.webp",
+   "w": 150,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_skeleton_pirate": {
+   "file": "sheet_skeleton_pirate.webp",
+   "w": 144,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_treant": {
+   "file": "sheet_treant.webp",
+   "w": 145,
+   "h": 200,
+   "frames": 8
+  },
+  "sheet_yeti": {
+   "file": "sheet_yeti.webp",
+   "w": 154,
+   "h": 200,
+   "frames": 8
+  },
+  "tower_alchemy": {
+   "file": "tower_alchemy.webp",
+   "w": 314,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_cannon": {
+   "file": "tower_cannon.webp",
+   "w": 289,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_crossbow": {
+   "file": "tower_crossbow.webp",
+   "w": 306,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_dragon": {
+   "file": "tower_dragon.webp",
+   "w": 319,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_flame": {
+   "file": "tower_flame.webp",
+   "w": 312,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_holy": {
+   "file": "tower_holy.webp",
+   "w": 310,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_ice": {
+   "file": "tower_ice.webp",
+   "w": 309,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_lightning": {
+   "file": "tower_lightning.webp",
+   "w": 310,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_poison": {
+   "file": "tower_poison.webp",
+   "w": 302,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_shadow": {
+   "file": "tower_shadow.webp",
+   "w": 310,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_sword": {
+   "file": "tower_sword.webp",
+   "w": 307,
+   "h": 300,
+   "frames": 3
+  },
+  "tower_time": {
+   "file": "tower_time.webp",
+   "w": 310,
+   "h": 300,
+   "frames": 3
+  }
+ }
+}
