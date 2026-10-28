@@ -30,6 +30,7 @@ import {
 } from "@/game/shop";
 import { checkPaid, claimDelivery, createOrder, isTwMobile, listOrders, normalizeMobile, orderCart, ordersToCheck, paymentLive, reportDeliveryFailure, setOrderStatus, syncOrdersFromServer, type Order, type PayCheck } from "@/platform/orders";
 import { scopedKey } from "@/platform/scope";
+import type { Wallet } from "@/game/wallet";
 import { auth } from "@/platform/auth";
 import { useUser } from "@/platform/useUser";
 import type { PlayerData } from "@/game/storage";
@@ -48,6 +49,7 @@ export default function Shop({
   cart,
   onCart,
   onPaid,
+  onWallet,
   previewScene,
   onPreviewScene,
   onPick,
@@ -59,6 +61,8 @@ export default function Shop({
   onCart: (next: Cart) => void;
   /** 付款成功：發貨（整車一起發） */
   onPaid: (cart: Cart) => CheckoutResult;
+  /** 會員：伺服器發貨後回傳的最新錢包（道具以伺服器為準） */
+  onWallet: (w: Wallet) => void;
   previewScene: string;
   onPreviewScene: (id: string) => void;
   onPick: (kind: "scene" | "pet" | "skin", id: string) => void;
@@ -149,17 +153,20 @@ export default function Shop({
   /** 回傳這次有沒有發貨；manual＝玩家自己按「查詢到帳」（已經發過的要告訴他） */
   const confirmPaid = async (o: Order, manual = false) => {
     setOrder(null);
-    let first: boolean;
+    let claim: Awaited<ReturnType<typeof claimDelivery>>;
     try {
-      first = await claimDelivery(o.orderId);
+      claim = await claimDelivery(o.orderId);
     } catch {
       return say(false, t("shop.checkFailed"));
     }
     refreshOrders();
-    if (!first) {
+    // 伺服器已經發貨：照伺服器的錢包更新畫面
+    if (claim.wallet) onWallet(claim.wallet);
+    if (!claim.first) {
       if (manual) say(true, t("shop.alreadyDelivered", { id: o.orderId }));
       return;
     }
+    if (claim.wallet) return say(true, t("shop.paid"));
     const r = onPaid(orderCart(o));
     // 發貨失敗：回報轉人工處理（客服補發或退款），不讓「已付款卻沒拿到」默默消失
     if (!r.ok) {

@@ -21,11 +21,12 @@ export interface OrderRow {
   payment_url: string | null;
   expires_at: string | null;
   paid_at: string | null;
+  paid_amount: number | null;
   delivered_at: string | null;
   created_at: string;
 }
 
-const COLS = "id, order_no, channel, user_id, game_id, region_id, currency, total, status, payment_provider, payment_code, payment_url, expires_at, paid_at, delivered_at, created_at";
+const COLS = "id, order_no, channel, user_id, game_id, region_id, currency, total, status, payment_provider, payment_code, payment_url, expires_at, paid_at, paid_amount, delivered_at, created_at";
 
 export interface LineIn {
   sku: string;

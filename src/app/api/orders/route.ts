@@ -13,6 +13,8 @@ import { orderDetail, paymentMode } from "@/server/payments";
 import { rateLimiter, sameOrigin } from "@/server/guard";
 import { db, userFromRequest } from "@/server/supabase";
 import { insertOrder, transition } from "@/server/orders";
+import { getWallet } from "@/server/wallet";
+import { isOwned } from "@/game/shop";
 
 const MAX_LINES = 50;
 /** 台灣手機：09 開頭 10 碼 */
@@ -93,6 +95,15 @@ export async function POST(request: Request) {
     }
     if ((pending.count ?? 0) >= 5) return Response.json({ error: "too_many_orders" }, { status: 429 });
     const gameId = out[0].sku.split(":")[0];
+    // 已經擁有的外觀不能再買（以伺服器的錢包為準）
+    try {
+      const w = await getWallet(sb, user.id, gameId);
+      const owned = out.find((l) => isOwned(w as unknown as Parameters<typeof isOwned>[0], parseSku(l.sku)!));
+      if (owned) return Response.json({ error: "already_owned", sku: owned.sku }, { status: 409 });
+    } catch (e) {
+      console.error("[wallet] 建單前讀取錢包失敗", user.id, e);
+      return Response.json({ error: "failed" }, { status: 500 });
+    }
     const orderId = newCcatOrderNo();
     try {
       await insertOrder(

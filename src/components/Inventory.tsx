@@ -74,7 +74,7 @@ export default function Inventory({
   player: PlayerData;
   onOpenShop: () => void;
   /** 領每日禮物；回傳拿到的道具（今天領過回傳 null） */
-  onClaimGift: () => ItemId[] | null;
+  onClaimGift: () => ItemId[] | null | Promise<ItemId[] | null>;
   onClose: () => void;
 }) {
   const t = useT();
@@ -90,9 +90,13 @@ export default function Inventory({
         <button
           className="px-btn px-btn-primary"
           disabled={claimed}
-          onClick={() => {
-            const gifts = onClaimGift();
-            if (gifts) setGot(gifts);
+          onClick={async () => {
+            try {
+              const gifts = await onClaimGift();
+              if (gifts) setGot(gifts);
+            } catch (e) {
+              console.error("[inventory] 領每日禮物失敗", e);
+            }
           }}
         >
           {t("inv.gift")}

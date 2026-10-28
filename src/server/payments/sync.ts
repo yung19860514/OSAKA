@@ -3,6 +3,7 @@
 import { queryCvsOrder, type CcatConfig, type CvsOrderStatus } from "./ccat";
 import { db, logPaymentEvent } from "@/server/supabase";
 import { transition } from "@/server/orders";
+import { fulfillOrder } from "@/server/wallet";
 
 /** 向黑貓 PAY 查這筆單，依結果更新資料庫（只改「待繳費」的單，不會把已發貨的改回去） */
 /** 回傳黑貓的查單結果，加上資料庫裡這筆單現在的狀態（null＝資料庫沒有這筆） */
@@ -12,6 +13,8 @@ export async function syncFromCcat(cfg: CcatConfig, orderNo: string): Promise<(C
   const s = await queryCvsOrder(cfg, orderNo);
   if (s.state === "paid") {
     await transition(sb, orderNo, ["pending", "expired"], { status: "paid", paid_at: s.payDate ? new Date(s.payDate.replace(" ", "T") + "+08:00").toISOString() : new Date().toISOString(), paid_amount: s.payAmount });
+    // 已付款 → 伺服器直接發貨進玩家錢包（玩家不用打開商店也會到帳；只會發一次）
+    await fulfillOrder(sb, orderNo);
   } else if (s.state === "review" || s.state === "unknown") {
     console.error("[ccat] 訂單需要人工對帳", orderNo, s.processCode, s.orderAmount, s.payAmount);
     await transition(sb, orderNo, ["pending", "expired"], { status: "review", paid_amount: s.payAmount || null });

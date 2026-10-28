@@ -122,7 +122,7 @@ export function cartTotal(cart: Cart, region: Region = currentRegion()): number 
 }
 
 /** 把一份商品發給玩家 */
-function grant(player: PlayerData, p: Purchase, qty: number): PlayerData {
+export function grant(player: PlayerData, p: Purchase, qty: number): PlayerData {
   const add = <K extends string>(rec: Record<K, number>, id: K, n: number) => ({ ...rec, [id]: (rec[id] ?? 0) + n });
   switch (p.kind) {
     case "skin":

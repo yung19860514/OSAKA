@@ -20,10 +20,13 @@ import { claimDailyGift, loadPlayer, savePlayer, type PlayerData } from "@/game/
 import Inventory from "./Inventory";
 import Shop from "./Shop";
 import { PetPicker, ScenePicker, SkinPicker } from "./Pickers";
-import { deliver, type Cart, type CheckoutResult } from "@/game/shop";
+import { GAME_ID, deliver, type Cart, type CheckoutResult } from "@/game/shop";
 import { setPlatformLocale } from "@/platform/prefs";
 import { auth } from "@/platform/auth";
 import { useUser } from "@/platform/useUser";
+import { cloudConfigured } from "@/platform/supabaseClient";
+import { claimDailyRemote, fetchWallet, spendItems } from "@/platform/wallet";
+import type { UseRequest, Wallet } from "@/game/wallet";
 import { useMatch } from "@/multiplayer/useMatch";
 import { GarbageMeter, ItemSlots, LobbyOverlay, OpponentBoards, ResultOverlay, RoomOverlay } from "@/multiplayer/MatchUI";
 import type { ItemId, ServerMsg } from "@/multiplayer/shared";
@@ -81,6 +84,41 @@ export default function BlockGame() {
   const [showInventory, setShowInventory] = useState(false);
   // 從平台大廳的商城連結進來（?shop=items）→ 直接打開商店的道具頁
   const user = useUser();
+  /** 會員的道具存在伺服器（訪客只存在瀏覽器） */
+  const cloudMember = cloudConfigured && user.kind === "member";
+  const cloudRef = useRef(cloudMember);
+  /** 伺服器的錢包為準：蓋掉這台裝置上的外觀與道具數量（設定、最高分等不動） */
+  const applyWallet = useCallback((w: Wallet) => {
+    setPlayer((p) => {
+      const next = { ...p, ...w };
+      savePlayer(next);
+      return next;
+    });
+  }, []);
+  /** 會員使用道具：畫面先扣（不卡手感），同時送伺服器；伺服器說不夠就以伺服器為準 */
+  const spend = useCallback(
+    (uses: UseRequest[]) => {
+      if (!cloudRef.current) return;
+      spendItems(GAME_ID, uses)
+        .then((r) => {
+          if (!r.ok && r.wallet) applyWallet(r.wallet);
+        })
+        .catch((e) => console.error("[wallet] 使用道具同步失敗", e));
+    },
+    [applyWallet],
+  );
+  // 登入／換帳號 → 從伺服器讀道具
+  useEffect(() => {
+    cloudRef.current = cloudMember;
+    if (!cloudMember) return;
+    let alive = true;
+    fetchWallet(GAME_ID)
+      .then((w) => alive && applyWallet(w))
+      .catch((e) => console.error("[wallet] 讀取道具失敗，暫用這台裝置的資料", e));
+    return () => {
+      alive = false;
+    };
+  }, [cloudMember, user.id, applyWallet]);
   const [showShop, setShowShop] = useState(() => new URLSearchParams(location.search).has("shop"));
   /** 購物車（關掉商店也保留，直到結帳或重新整理） */
   const [cart, setCart] = useState<Cart>([]);
@@ -213,6 +251,7 @@ export default function BlockGame() {
             savePlayer(next);
             return next;
           });
+          spend(used.map((id) => ({ kind: "battle" as const, id, qty: 1 })));
         }
         setPhase("playing");
         break;
@@ -545,11 +584,12 @@ export default function BlockGame() {
           if (mp.active) break; // 對戰中用道具欄，不用單人炸彈
           if ((playerRef.current.items.bomb ?? 0) > 0 && g.bomb(2)) {
             updatePlayer((p) => ({ ...p, items: { ...p.items, bomb: p.items.bomb - 1 } }));
+            spend([{ kind: "item", id: "bomb", qty: 1 }]);
           }
           break;
       }
     },
-    [updatePlayer],
+    [updatePlayer, spend],
   );
 
   const release = useCallback((a: Action) => {
@@ -576,10 +616,11 @@ export default function BlockGame() {
     if (!g || (playerRef.current.items.revive ?? 0) <= 0) return;
     if (g.revive()) {
       updatePlayer((p) => ({ ...p, items: { ...p.items, revive: p.items.revive - 1 } }));
+      spend([{ kind: "item", id: "revive", qty: 1 }]);
       setHud(snapshot(g));
       setPhase("playing");
     }
-  }, [updatePlayer]);
+  }, [updatePlayer, spend]);
 
   // 主迴圈
   useEffect(() => {
@@ -839,7 +880,13 @@ export default function BlockGame() {
     });
     return r;
   };
-  const claimGift = () => {
+  const claimGift = async () => {
+    // 會員：由伺服器發（一天一次、以伺服器為準）
+    if (cloudRef.current) {
+      const r = await claimDailyRemote(GAME_ID);
+      if (r.wallet) applyWallet(r.wallet);
+      return r.gifts;
+    }
     const r = claimDailyGift(playerRef.current);
     if (!r) return null;
     updatePlayer(() => r.next);
@@ -1159,6 +1206,7 @@ export default function BlockGame() {
                 cart={cart}
                 onCart={setCart}
                 onPaid={onPaid}
+                onWallet={applyWallet}
                 initialTab={(() => {
                   const q = new URLSearchParams(location.search).get("shop");
                   return q === "items" || q === "cart" || q === "orders" ? q : "look";

@@ -7,7 +7,8 @@ import { DEFAULT_KEYS, type KeyBindings } from "./controls";
 import { detectLocale, type Locale } from "@/i18n";
 import { loadPrefs } from "@/platform/prefs";
 import { scopedKey } from "@/platform/scope";
-import { ITEM_IDS, rollItem, type ItemId as BattleItemId } from "@/multiplayer/shared";
+import { rollItem, type ItemId as BattleItemId } from "@/multiplayer/shared";
+import { STARTER_BATTLE_ITEMS, WALLET_DEFAULTS } from "./wallet";
 
 export type ItemId = "revive" | "bomb";
 
@@ -42,8 +43,6 @@ export const today = () => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 };
 
-/** 新手禮包：每種對戰道具各 1 個 */
-const STARTER_BATTLE_ITEMS = Object.fromEntries(ITEM_IDS.map((id) => [id, 1])) as Record<BattleItemId, number>;
 
 /** 領每日禮物；今天領過就回傳 null */
 export function claimDailyGift(p: PlayerData): { next: PlayerData; gifts: BattleItemId[] } | null {
@@ -58,23 +57,17 @@ export function claimDailyGift(p: PlayerData): { next: PlayerData; gifts: Battle
 const KEY_BASE = "blockblitz.player.v1";
 
 const DEFAULTS: PlayerData = {
+  // 錢包（擁有的外觀、道具）預設值與伺服器共用，見 wallet.ts
+  ...WALLET_DEFAULTS,
   highScore: 0,
   skinId: "arcade",
-  ownedSkins: ["arcade", "aurora", "mono"],
-  // 開發測試用的起始道具，正式版改為儲值取得
-  items: { revive: 1, bomb: 2 },
   keys: DEFAULT_KEYS,
   sound: { volume: 0.6, muted: false },
   startLevel: 1,
   petId: "cat",
-  ownedPets: ["cat"],
   sceneId: "space",
-  ownedScenes: ["space"],
   locale: "zh-TW",
   nickname: "",
-  battleItems: STARTER_BATTLE_ITEMS,
-  dailyGift: "",
-  coins: 0,
 };
 
 export function loadPlayer(): PlayerData {

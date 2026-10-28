@@ -8,6 +8,7 @@
 import { parseSku, skuOf, type Cart, type Purchase } from "@/game/shop";
 import { auth } from "./auth";
 import { authHeaders, cloudConfigured } from "./supabaseClient";
+import { normalizeWallet, type Wallet } from "@/game/wallet";
 
 export interface OrderLine {
   sku: string;
@@ -174,20 +175,21 @@ export function orderCart(o: Order): Cart {
 }
 
 /**
- * 認領發貨：同一筆訂單只會成功一次（有資料庫時由伺服器判定，換裝置也不會重複發）。
- * 回 true 才發貨；沒有資料庫時退回這台裝置的 markPaidOnce。
+ * 發貨：同一筆訂單只會成功一次。
+ * 有資料庫：伺服器直接把商品加進玩家錢包，回傳最新錢包（畫面照著更新就好，不在瀏覽器發）。
+ * 沒有資料庫（本機開發）：回 first＝true 時由這台裝置發貨。
  */
-export async function claimDelivery(orderId: string): Promise<boolean> {
-  if (!cloudConfigured) return markPaidOnce(orderId);
+export async function claimDelivery(orderId: string): Promise<{ first: boolean; wallet?: Wallet }> {
+  if (!cloudConfigured) return { first: markPaidOnce(orderId) };
   const res = await fetch(`/api/orders/${encodeURIComponent(orderId)}/delivery`, {
     method: "POST",
     headers: { "content-type": "application/json", ...(await authHeaders()) },
     body: JSON.stringify({ action: "claim" }),
   });
   if (!res.ok) throw new Error("claim_failed");
-  const first = ((await res.json()) as { first?: boolean }).first === true;
-  markPaidOnce(orderId); // 這台裝置的訂單紀錄也標成已付款
-  return first;
+  const data = (await res.json()) as { first?: boolean; status?: string; wallet?: unknown };
+  if (data.status === "delivered") markPaidOnce(orderId); // 這台裝置的訂單紀錄也標成已到帳
+  return { first: data.first === true, wallet: data.wallet ? normalizeWallet(data.wallet) : undefined };
 }
 
 /** 發貨失敗：回報伺服器轉人工處理（客服補發或退款）；沒有資料庫時改回待處理，下次打開商店再發 */
