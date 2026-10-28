@@ -1,13 +1,14 @@
 // 會員（平台帳號）。一個平台帳號 = 通行證，進到每款遊戲時自動建立該遊戲的遊戲帳號。
 //
-// 目前：「模擬會員系統」（mockAuth）—— 帳號存在這台電腦的瀏覽器，只在本機開發時啟用。
-// ⏳ 總公司開好 Supabase 後：新增 supabaseAuth（實作同一組 AuthAdapter 介面），把 `auth` 換掉即可，
-//    畫面與遊戲端不用改。登入方式預計：Email、Google、LINE。
+// cloudAuth：Supabase 帳號系統（有設 NEXT_PUBLIC_SUPABASE_URL／ANON_KEY 就用，正式網站與本機都是）。
+// mockAuth：「模擬會員系統」—— 帳號存在這台電腦的瀏覽器，只在本機開發、沒設 Supabase 時啟用。
+// 畫面與遊戲端都只認 AuthAdapter 介面。登入方式：Email（Google、LINE 之後加）。
 //
 // 註冊只需要 Email＋密碼（老闆 2026-10-07：不收手機）；暱稱預設取 Email @ 前面，之後可在會員中心修改。
 
 import { GAME_SAVE_KEYS, scopedKey, sessionUserId, switchSession } from "./scope";
 import { loadPrefs } from "./prefs";
+import { authHeaders, cloudConfigured, supabase } from "./supabaseClient";
 
 export type PlatformUser =
   | { kind: "guest"; id: string; name: string }
@@ -20,7 +21,12 @@ export type AuthError =
   | "bad_credentials"
   | "bad_name"
   | "not_signed_in"
-  | "not_available";
+  | "not_available"
+  /** 註冊成功，但要先到信箱點確認連結才能登入 */
+  | "check_email"
+  | "email_not_confirmed"
+  | "rate_limited"
+  | "network";
 
 export type AuthResult = { ok: true; user: PlatformUser } | { ok: false; error: AuthError };
 
@@ -39,6 +45,10 @@ export interface AuthAdapter {
   deleteAccount(password: string): Promise<AuthResult>;
   /** 登入狀態改變時通知（含其他分頁） */
   subscribe(fn: () => void): () => void;
+  /** 忘記密碼：寄重設密碼信（不論 Email 有沒有註冊都回成功，不洩漏會員名單） */
+  requestPasswordReset(email: string): Promise<{ ok: boolean; error?: AuthError }>;
+  /** 從重設密碼信的連結進來後，設定新密碼 */
+  setNewPassword(password: string): Promise<AuthResult>;
 }
 
 // ---------- 共用檢查 ----------
@@ -231,6 +241,13 @@ const mockAuth: AuthAdapter = {
     return { ok: true, user: guestUser() };
   },
 
+  async requestPasswordReset() {
+    return { ok: false, error: "not_available" };
+  },
+  async setNewPassword() {
+    return { ok: false, error: "not_available" };
+  },
+
   subscribe(fn) {
     const onStorage = (e: StorageEvent) => {
       if (e.key === null || e.key === USERS_KEY || e.key === "platform.session.v1") {
@@ -259,10 +276,190 @@ const noAuth: AuthAdapter = {
   changePassword: async () => ({ ok: false, error: "not_available" }),
   deleteAccount: async () => ({ ok: false, error: "not_available" }),
   subscribe: () => () => {},
+  requestPasswordReset: async () => ({ ok: false, error: "not_available" }),
+  setNewPassword: async () => ({ ok: false, error: "not_available" }),
 };
 
-// 模擬會員只在本機開發啟用（正式網站不會出現「假註冊」）
-export const auth: AuthAdapter = process.env.NODE_ENV === "production" ? noAuth : mockAuth;
+// ---------- 雲端會員系統（Supabase） ----------
+
+let cloudUser: PlatformUser | null = null;
+let cloudStarted = false;
+const cloudListeners = new Set<() => void>();
+const cloudNotify = () => cloudListeners.forEach((fn) => fn());
+
+/** Supabase 的錯誤 → 畫面上的錯誤代碼 */
+function cloudError(e: { code?: string; status?: number; message?: string } | null | undefined): AuthError {
+  const code = e?.code ?? "";
+  if (code === "email_not_confirmed") return "email_not_confirmed";
+  if (code === "invalid_credentials") return "bad_credentials";
+  if (code === "user_already_exists" || code === "email_exists") return "email_taken";
+  if (code === "weak_password") return "weak_password";
+  if (code === "over_email_send_rate_limit" || code === "over_request_rate_limit" || e?.status === 429) return "rate_limited";
+  if (code === "validation_failed" || code === "email_address_invalid") return "bad_email";
+  return "network";
+}
+
+/** 依登入狀態載入會員資料（暱稱、地區在 profiles 表） */
+async function loadCloudUser(): Promise<void> {
+  const sb = supabase();
+  const { data } = await sb.auth.getSession();
+  const u = data.session?.user;
+  const prev = cloudUser?.kind === "member" ? cloudUser.id : null;
+  if (!u) {
+    cloudUser = guestUser();
+    if (prev) switchSession(null);
+  } else {
+    const { data: p, error: pe } = await sb.from("profiles").select("display_name, region_id, created_at").eq("id", u.id).maybeSingle();
+    if (pe) console.error("[auth] 讀取會員資料失敗，暫用預設值", pe.message);
+    const email = u.email ?? "";
+    cloudUser = {
+      kind: "member",
+      id: u.id,
+      name: (p?.display_name as string | null) || defaultName(email),
+      email,
+      regionId: (p?.region_id as string | undefined) ?? "tw",
+      createdAt: (p?.created_at as string | undefined) ?? u.created_at,
+    };
+    if (prev !== u.id) {
+      // 這台裝置第一次登入這個帳號：訪客的進度帶過去（帳號已有存檔就不蓋）
+      const fresh = sessionUserId() === null;
+      if (fresh) migrateGuestProgress(u.id);
+      switchSession(u.id, { inherit: fresh });
+    }
+  }
+  cloudNotify();
+}
+
+function startCloud() {
+  if (cloudStarted || typeof window === "undefined") return;
+  cloudStarted = true;
+  void loadCloudUser();
+  supabase().auth.onAuthStateChange((event) => {
+    // 交給下一輪處理：在這個回呼裡直接呼叫 Supabase 會卡住
+    if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "USER_UPDATED" || event === "INITIAL_SESSION") setTimeout(() => void loadCloudUser(), 0);
+  });
+}
+
+/** 刪除帳號、改密碼前再確認一次密碼 */
+async function verifyPassword(password: string): Promise<boolean> {
+  const email = cloudUser?.kind === "member" ? cloudUser.email : "";
+  if (!email) return false;
+  const { error } = await supabase().auth.signInWithPassword({ email, password });
+  return !error;
+}
+
+const siteUrl = () => (typeof window === "undefined" ? "" : window.location.origin);
+
+const cloudAuth: AuthAdapter = {
+  enabled: true,
+  mode: "cloud",
+
+  currentUser() {
+    startCloud();
+    return (cloudUser ??= guestUser());
+  },
+
+  async signUp({ email, password }) {
+    if (!validEmail(email)) return { ok: false, error: "bad_email" };
+    if (!validPassword(password)) return { ok: false, error: "weak_password" };
+    const { data, error } = await supabase().auth.signUp({
+      email: normEmail(email),
+      password,
+      options: { data: { display_name: defaultName(email) }, emailRedirectTo: `${siteUrl()}/account` },
+    });
+    if (error) return { ok: false, error: cloudError(error) };
+    // 開了「Email 確認」時，已註冊的 Email 會回一個沒有登入方式的帳號（不直接說「已註冊」）
+    if (data.user && data.user.identities?.length === 0) return { ok: false, error: "email_taken" };
+    if (!data.session) return { ok: false, error: "check_email" };
+    await loadCloudUser();
+    return { ok: true, user: cloudUser! };
+  },
+
+  async signIn({ email, password }) {
+    const { error } = await supabase().auth.signInWithPassword({ email: normEmail(email), password });
+    if (error) return { ok: false, error: cloudError(error) };
+    await loadCloudUser();
+    return { ok: true, user: cloudUser! };
+  },
+
+  async signOut() {
+    await supabase().auth.signOut();
+    await loadCloudUser();
+  },
+
+  async updateProfile({ name }) {
+    if (cloudUser?.kind !== "member") return { ok: false, error: "not_signed_in" };
+    if (name !== undefined) {
+      const n = name.trim();
+      if (n.length < 1 || n.length > 16) return { ok: false, error: "bad_name" };
+      const { error } = await supabase().from("profiles").update({ display_name: n }).eq("id", cloudUser.id);
+      if (error) return { ok: false, error: "network" };
+    }
+    await loadCloudUser();
+    return { ok: true, user: cloudUser };
+  },
+
+  async changePassword(oldPassword, newPassword) {
+    if (cloudUser?.kind !== "member") return { ok: false, error: "not_signed_in" };
+    if (!validPassword(newPassword)) return { ok: false, error: "weak_password" };
+    if (!(await verifyPassword(oldPassword))) return { ok: false, error: "bad_credentials" };
+    const { error } = await supabase().auth.updateUser({ password: newPassword });
+    if (error) return { ok: false, error: cloudError(error) };
+    return { ok: true, user: cloudUser };
+  },
+
+  async deleteAccount(password) {
+    if (cloudUser?.kind !== "member") return { ok: false, error: "not_signed_in" };
+    if (!(await verifyPassword(password))) return { ok: false, error: "bad_credentials" };
+    let res: Response;
+    try {
+      res = await fetch("/api/account", { method: "DELETE", headers: { "content-type": "application/json", ...(await authHeaders()) }, body: JSON.stringify({ password }) });
+    } catch {
+      return { ok: false, error: "network" };
+    }
+    if (res.status === 403) return { ok: false, error: "bad_credentials" };
+    if (res.status === 429) return { ok: false, error: "rate_limited" };
+    if (!res.ok) return { ok: false, error: "network" };
+    const id = cloudUser.id;
+    for (const base of [...GAME_SAVE_KEYS, GAME_ACCOUNTS_KEY]) {
+      try {
+        localStorage.removeItem(scopedKey(base, id));
+      } catch {
+        // 刪不掉的殘留資料沒有帳號對應，不會再被讀到
+      }
+    }
+    switchSession(null, { dropPrev: true });
+    await supabase().auth.signOut();
+    await loadCloudUser();
+    return { ok: true, user: guestUser() };
+  },
+
+  subscribe(fn) {
+    startCloud();
+    cloudListeners.add(fn);
+    return () => {
+      cloudListeners.delete(fn);
+    };
+  },
+
+  async requestPasswordReset(email) {
+    if (!validEmail(email)) return { ok: false, error: "bad_email" };
+    const { error } = await supabase().auth.resetPasswordForEmail(normEmail(email), { redirectTo: `${siteUrl()}/account/reset` });
+    if (error && cloudError(error) === "rate_limited") return { ok: false, error: "rate_limited" };
+    return { ok: true };
+  },
+
+  async setNewPassword(password) {
+    if (!validPassword(password)) return { ok: false, error: "weak_password" };
+    const { error } = await supabase().auth.updateUser({ password });
+    if (error) return { ok: false, error: cloudError(error) };
+    await loadCloudUser();
+    return cloudUser?.kind === "member" ? { ok: true, user: cloudUser } : { ok: false, error: "not_signed_in" };
+  },
+};
+
+// 有設 Supabase＝正式會員系統；沒設時本機開發用模擬會員（正式網站不會出現「假註冊」）
+export const auth: AuthAdapter = cloudConfigured ? cloudAuth : process.env.NODE_ENV === "production" ? noAuth : mockAuth;
 
 // ---------- 遊戲帳號 ----------
 

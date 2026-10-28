@@ -15,8 +15,9 @@ export function sameOrigin(request: Request): boolean {
 /** 每個來源 IP 在時間窗內最多幾次（存在記憶體：同一個伺服器執行個體內有效，盡力而為） */
 export function rateLimiter(max: number, windowMs: number) {
   const hits = new Map<string, number[]>();
-  return (request: Request, now = Date.now()): boolean => {
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
+  /** key：要計次的對象（給了就用它，例如會員編號；沒給就用來源 IP） */
+  return (request: Request, now = Date.now(), key?: string): boolean => {
+    const ip = key ?? (request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown");
     const recent = (hits.get(ip) ?? []).filter((t) => now - t < windowMs);
     if (recent.length >= max) {
       hits.set(ip, recent);

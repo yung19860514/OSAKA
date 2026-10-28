@@ -1392,3 +1392,27 @@ a.pf-news-title:hover {
 .pf-grid {
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
 }
+
+/* 登入視窗：提示訊息（非錯誤）與「忘記密碼」 */
+.pf-form-info {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--pf-line-hi);
+  color: var(--pf-accent);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pf-link-btn {
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--pf-mute);
+  font: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.pf-link-btn:hover {
+  color: var(--pf-accent);
+}

@@ -7,6 +7,7 @@
 
 import { parseSku, skuOf, type Cart, type Purchase } from "@/game/shop";
 import { auth } from "./auth";
+import { authHeaders, cloudConfigured } from "./supabaseClient";
 
 export interface OrderLine {
   sku: string;
@@ -44,7 +45,7 @@ export interface Order {
   };
 }
 
-export type CreateOrderError = "amount_out_of_range" | "payment_not_configured" | "payment_failed" | "login_required" | "bad_mobile" | "failed";
+export type CreateOrderError = "amount_out_of_range" | "payment_not_configured" | "payment_failed" | "login_required" | "email_not_confirmed" | "bad_mobile" | "failed";
 
 /** 台灣手機：09 開頭 10 碼（空白、減號自動去掉） */
 export const normalizeMobile = (s: string) => s.replace(/[\s-]/g, "");
@@ -59,7 +60,7 @@ export async function createOrder(gameId: string, cart: Cart, payer: { mobile?: 
   if (auth.enabled && user.kind !== "member") throw new Error("login_required");
   const res = await fetch("/api/orders", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...(await authHeaders()) },
     body: JSON.stringify({
       gameId,
       buyer: user.kind === "member" ? { email: user.email, mobile: payer.mobile ? normalizeMobile(payer.mobile) : undefined } : undefined,
@@ -70,7 +71,7 @@ export async function createOrder(gameId: string, cart: Cart, payer: { mobile?: 
     const err = ((await res.json().catch(() => ({}))) as { error?: string }).error;
     // 伺服器要求繳款人 Email（bad_buyer）＝要先登入會員
     if (err === "bad_buyer") throw new Error("login_required");
-    const known: string[] = ["amount_out_of_range", "payment_not_configured", "payment_failed", "login_required", "bad_mobile"];
+    const known: string[] = ["amount_out_of_range", "payment_not_configured", "payment_failed", "login_required", "email_not_confirmed", "bad_mobile"];
     throw new Error(err && known.includes(err) ? err : "failed");
   }
   const data = (await res.json()) as Omit<Order, "lines" | "gameId" | "createdAt" | "userId"> & { lines: Omit<OrderLine, "purchase">[] };
@@ -150,10 +151,12 @@ export type PayCheck = "paid" | "pending" | "review" | "expired" | "cancelled" |
 /** 向伺服器查這筆訂單繳費了沒（伺服器再向黑貓 PAY 查證） */
 export async function checkPaid(orderId: string): Promise<PayCheck> {
   try {
-    const res = await fetch(`/api/orders/${encodeURIComponent(orderId)}`, { cache: "no-store" });
+    const res = await fetch(`/api/orders/${encodeURIComponent(orderId)}`, { cache: "no-store", headers: await authHeaders() });
     if (res.status === 503) return "closed";
     if (!res.ok) return "error";
     const s = ((await res.json()) as { status?: string }).status;
+    // delivered＝別的裝置（或之前）已經認領發貨過了，在這裡視為已付款，由 claimDelivery 決定要不要發
+    if (s === "delivered") return "paid";
     return s === "paid" || s === "pending" || s === "review" || s === "expired" || s === "cancelled" ? s : "unknown";
   } catch {
     return "error";
@@ -168,4 +171,88 @@ export function ordersToCheck(list: Order[], now = Date.now()): Order[] {
 /** 訂單內容換回購物車格式（發貨用） */
 export function orderCart(o: Order): Cart {
   return o.lines.map((l) => ({ p: l.purchase, qty: l.qty }));
+}
+
+/**
+ * 認領發貨：同一筆訂單只會成功一次（有資料庫時由伺服器判定，換裝置也不會重複發）。
+ * 回 true 才發貨；沒有資料庫時退回這台裝置的 markPaidOnce。
+ */
+export async function claimDelivery(orderId: string): Promise<boolean> {
+  if (!cloudConfigured) return markPaidOnce(orderId);
+  const res = await fetch(`/api/orders/${encodeURIComponent(orderId)}/delivery`, {
+    method: "POST",
+    headers: { "content-type": "application/json", ...(await authHeaders()) },
+    body: JSON.stringify({ action: "claim" }),
+  });
+  if (!res.ok) throw new Error("claim_failed");
+  const first = ((await res.json()) as { first?: boolean }).first === true;
+  markPaidOnce(orderId); // 這台裝置的訂單紀錄也標成已付款
+  return first;
+}
+
+/** 發貨失敗：回報伺服器轉人工處理（客服補發或退款）；沒有資料庫時改回待處理，下次打開商店再發 */
+export async function reportDeliveryFailure(orderId: string): Promise<void> {
+  if (!cloudConfigured) return setOrderStatus(orderId, "pending");
+  await fetch(`/api/orders/${encodeURIComponent(orderId)}/delivery`, {
+    method: "POST",
+    headers: { "content-type": "application/json", ...(await authHeaders()) },
+    body: JSON.stringify({ action: "fail" }),
+  }).catch((e) => console.error("[orders] 回報發貨失敗時出錯", orderId, e));
+}
+
+interface ServerOrder {
+  order_no: string;
+  game_id: string;
+  region_id: string;
+  currency: string;
+  total: number;
+  status: string;
+  payment_provider: string | null;
+  payment_code: string | null;
+  payment_url: string | null;
+  expires_at: string | null;
+  created_at: string;
+  order_items: { sku: string; qty: number; unit_price: number }[];
+}
+
+/**
+ * 從伺服器同步這個帳號的訂單到這台裝置（伺服器的狀態為準）。
+ * 已付款但還沒發貨的，在這台裝置標成「待處理」，打開商店時會自動查證並發貨。
+ */
+export async function syncOrdersFromServer(gameId: string): Promise<void> {
+  if (!cloudConfigured) return;
+  const me = auth.currentUser();
+  if (me.kind !== "member") return;
+  const res = await fetch(`/api/orders?game=${encodeURIComponent(gameId)}`, { cache: "no-store", headers: await authHeaders() });
+  if (!res.ok) throw new Error("orders_sync_failed");
+  const list = ((await res.json()) as { orders?: ServerOrder[] }).orders ?? [];
+  const local = new Map(readAll().map((o) => [o.orderId, o]));
+  for (const so of list) {
+    const lines = so.order_items.map((l) => ({ sku: l.sku, qty: l.qty, unitPrice: l.unit_price, purchase: parseSku(l.sku) }));
+    if (lines.some((l) => !l.purchase)) continue; // 這款遊戲看不懂的商品（例：其他遊戲）不放進這裡
+    const status: OrderStatus = so.status === "delivered" ? "paid" : so.status === "pending" || so.status === "paid" || so.status === "review" ? "pending" : "expired";
+    const prev = local.get(so.order_no);
+    local.set(so.order_no, {
+      orderId: so.order_no,
+      userId: me.id,
+      gameId: so.game_id,
+      regionId: so.region_id,
+      currency: so.currency,
+      lines: lines.map((l) => ({ sku: l.sku, qty: l.qty, unitPrice: l.unitPrice, purchase: l.purchase! })),
+      total: so.total,
+      // 這台裝置已經發過貨的（paid）就維持，不要改回待處理
+      status: prev?.status === "paid" ? "paid" : status,
+      createdAt: so.created_at,
+      payment: {
+        method: "cvs",
+        provider: so.payment_provider === "ccat" ? "ccat" : "mock",
+        store: prev?.payment.store ?? "7-ELEVEN",
+        code: so.payment_code ?? prev?.payment.code ?? "",
+        barcodeUrl: so.payment_url ?? prev?.payment.barcodeUrl,
+        expiresAt: so.expires_at ?? prev?.payment.expiresAt ?? so.created_at,
+        mock: so.payment_provider !== "ccat",
+      },
+    });
+  }
+  writeAll([...local.values()].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)));
 }

@@ -28,7 +28,7 @@ import {
   type CheckoutResult,
   type Purchase,
 } from "@/game/shop";
-import { checkPaid, createOrder, isTwMobile, listOrders, markPaidOnce, normalizeMobile, orderCart, ordersToCheck, paymentLive, setOrderStatus, type Order, type PayCheck } from "@/platform/orders";
+import { checkPaid, claimDelivery, createOrder, isTwMobile, listOrders, normalizeMobile, orderCart, ordersToCheck, paymentLive, reportDeliveryFailure, setOrderStatus, syncOrdersFromServer, type Order, type PayCheck } from "@/platform/orders";
 import { scopedKey } from "@/platform/scope";
 import { auth } from "@/platform/auth";
 import { useUser } from "@/platform/useUser";
@@ -137,6 +137,8 @@ export default function Shop({
               ? "shop.needLogin"
               : code === "bad_mobile"
                 ? "shop.badMobile"
+                : code === "email_not_confirmed"
+                  ? "auth.err.email_not_confirmed"
               : "shop.orderFailed";
       say(false, t(key, { min: formatMoney(cvs.min), max: formatMoney(cvs.max) }));
     } finally {
@@ -144,15 +146,24 @@ export default function Shop({
     }
   };
   /** 確認已繳費 → 發貨（同一筆訂單只會發一次） */
-  const confirmPaid = (o: Order) => {
+  /** 回傳這次有沒有發貨；manual＝玩家自己按「查詢到帳」（已經發過的要告訴他） */
+  const confirmPaid = async (o: Order, manual = false) => {
     setOrder(null);
-    const first = markPaidOnce(o.orderId);
+    let first: boolean;
+    try {
+      first = await claimDelivery(o.orderId);
+    } catch {
+      return say(false, t("shop.checkFailed"));
+    }
     refreshOrders();
-    if (!first) return;
+    if (!first) {
+      if (manual) say(true, t("shop.alreadyDelivered", { id: o.orderId }));
+      return;
+    }
     const r = onPaid(orderCart(o));
-    // 發貨失敗：改回待處理，下次打開商店會再查、再發（不讓「已付款卻沒拿到」卡住）
+    // 發貨失敗：回報轉人工處理（客服補發或退款），不讓「已付款卻沒拿到」默默消失
     if (!r.ok) {
-      setOrderStatus(o.orderId, "pending");
+      await reportDeliveryFailure(o.orderId);
       refreshOrders();
     }
     say(r.ok, t(r.ok ? "shop.paid" : "shop.deliverFailed"));
@@ -172,17 +183,24 @@ export default function Shop({
     setBusy(true);
     const s = await checkPaid(o.orderId);
     setBusy(false);
-    if (s === "paid") return confirmPaid(o);
+    if (s === "paid") return confirmPaid(o, true);
     say(false, payCheckText(s, o));
   };
   // 打開商店時：還沒到帳的黑貓 PAY 訂單自動查一次（繳費後回來就會到帳）
   useEffect(() => {
     let alive = true;
     (async () => {
+      // 先把伺服器上的訂單同步過來（換裝置、清掉瀏覽器資料也接得上）
+      try {
+        await syncOrdersFromServer(GAME_ID);
+        if (alive) refreshOrders();
+      } catch {
+        if (alive) say(false, t("shop.checkFailed"));
+      }
       for (const o of ordersToCheck(listOrders(GAME_ID))) {
         const s = await checkPaid(o.orderId);
         if (!alive) return;
-        if (s === "paid") confirmPaid(o);
+        if (s === "paid") await confirmPaid(o);
         // 已繳但要人工對帳、或查不到 → 要讓玩家知道，不能默默略過
         else if (s === "review" || s === "closed" || s === "error" || s === "unknown") say(false, payCheckText(s, o));
       }

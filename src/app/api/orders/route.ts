@@ -1,7 +1,8 @@
 // 建立訂單：價格一律由伺服器依地區售價表計算，不採用前端送來的價格。
 // 付款方式：超商代碼繳費，金流商＝黑貓 PAY（老闆 2026-10-07 確認）。
 // 黑貓 PAY 接口：src/server/payments（建單在這裡、查到帳 /api/orders/[id]、繳費通知 /api/payments/ccat/notify）。
-// ⏳ 會員與資料庫接上後：從登入 session 取得玩家與綁定地區（不信任前端送的 Email）、訂單存進資料庫。
+// 有資料庫時：一定要登入（Email 用登入帳號的，不信任前端），訂單存進資料庫 orders 表。
+// ⏳ 地區之後依帳號綁定（目前只開台灣）。
 //    串接經驗與測試工具：_接案專案/黑貓PAY超商繳款/
 
 import { randomUUID } from "node:crypto";
@@ -10,6 +11,8 @@ import { MAX_QTY, isCosmetic, parseSku } from "@/game/shop";
 import { CcatError, createCvsOrder, newCcatOrderNo } from "@/server/payments/ccat";
 import { orderDetail, paymentMode } from "@/server/payments";
 import { rateLimiter, sameOrigin } from "@/server/guard";
+import { db, userFromRequest } from "@/server/supabase";
+import { insertOrder, transition } from "@/server/orders";
 
 const MAX_LINES = 50;
 /** 台灣手機：09 開頭 10 碼 */
@@ -71,6 +74,53 @@ export async function POST(request: Request) {
   const base = { regionId: region.id, currency: region.currency, lines: out, total, status: "pending" as const };
   const store = region.cvs.stores[0] ?? "";
 
+  // ---------- 有資料庫：會員必須登入，訂單記進資料庫 ----------
+  const sb = db();
+  if (sb) {
+    const user = await userFromRequest(request);
+    if (!user?.email) return Response.json({ error: "login_required" }, { status: 401 });
+    if (!user.email_confirmed_at) return Response.json({ error: "email_not_confirmed" }, { status: 403 });
+    if (mode.kind === "ccat") {
+      if (!sameOrigin(request)) return Response.json({ error: "forbidden" }, { status: 403 });
+      if (!ccatLimit(request)) return Response.json({ error: "too_many_orders" }, { status: 429 });
+      if (typeof mobile !== "string") return Response.json({ error: "bad_mobile" }, { status: 400 });
+    }
+    if (!Number.isInteger(total)) return Response.json({ error: "bad_amount" }, { status: 400 });
+    const pending = await sb.from("orders").select("id", { count: "exact", head: true }).eq("user_id", user.id).eq("status", "pending");
+    if (pending.error) {
+      console.error("[db] 查詢待繳費訂單數失敗", pending.error.message);
+      return Response.json({ error: "failed" }, { status: 500 });
+    }
+    if ((pending.count ?? 0) >= 5) return Response.json({ error: "too_many_orders" }, { status: 429 });
+    const gameId = out[0].sku.split(":")[0];
+    const orderId = newCcatOrderNo();
+    try {
+      await insertOrder(
+        sb,
+        { orderNo: orderId, channel: "platform", userId: user.id, gameId, regionId: region.id, currency: region.currency, total, status: "pending", provider: mode.kind, expiresAt },
+        out,
+      );
+    } catch (e) {
+      console.error("[db] 建立訂單失敗", orderId, e, (e as { cause?: unknown }).cause);
+      return Response.json({ error: "failed" }, { status: 500 });
+    }
+    if (mode.kind === "mock") {
+      const code = Array.from({ length: 12 }, () => Math.floor(Math.random() * 10)).join("");
+      return Response.json({ orderId, ...base, payment: { method: "cvs", provider: "mock", store, code, expiresAt, mock: true } });
+    }
+    try {
+      const r = await createCvsOrder(mode.cfg, { orderNo: orderId, amount: total, expireDate: twDate(expiresAt), email: user.email, mobile: mobile as string, detail: orderDetail(out) });
+      const { error } = await sb.from("orders").update({ payment_code: r.code, payment_url: r.shortUrl ?? null }).eq("order_no", orderId);
+      if (error) console.error("[db] 繳費代碼寫入失敗（訂單仍有效）", orderId, error.message);
+      return Response.json({ orderId, ...base, payment: { method: "cvs", provider: "ccat", store, code: r.code, barcodeUrl: r.shortUrl, expiresAt, mock: false } });
+    } catch (e) {
+      console.error("[ccat] 建單失敗", orderId, e instanceof CcatError ? `${e.message} ${JSON.stringify(e.detail)}` : e);
+      await transition(sb, orderId, ["pending"], { status: "cancelled" }).catch((err) => console.error("[db] 取消失敗訂單時出錯", orderId, err));
+      return Response.json({ error: "payment_failed" }, { status: 502 });
+    }
+  }
+
+  // ---------- 沒有資料庫（本機開發沒填 Supabase）：舊的開發替身流程 ----------
   if (mode.kind === "ccat") {
     // 防止別人用程式大量建單、拿我們的帳號寄信給任意 Email（⏳ 會員上伺服器後改成只認登入帳號的 Email）
     if (!sameOrigin(request)) return Response.json({ error: "forbidden" }, { status: 403 });
@@ -100,6 +150,29 @@ export async function POST(request: Request) {
   // 本機開發：模擬代碼走流程
   const code = Array.from({ length: 12 }, () => Math.floor(Math.random() * 10)).join("");
   return Response.json({ orderId: randomUUID(), ...base, payment: { method: "cvs", provider: "mock", store, code, expiresAt, mock: true } });
+}
+
+/** 我的訂單（最近 60 天，新到舊）：換裝置、清掉瀏覽器資料也找得回來 */
+export async function GET(request: Request) {
+  const sb = db();
+  if (!sb) return Response.json({ error: "not_configured" }, { status: 503 });
+  const user = await userFromRequest(request);
+  if (!user) return Response.json({ error: "login_required" }, { status: 401 });
+  const gameId = new URL(request.url).searchParams.get("game");
+  let q = sb
+    .from("orders")
+    .select("order_no, game_id, region_id, currency, total, status, payment_provider, payment_code, payment_url, expires_at, created_at, order_items(sku, qty, unit_price)")
+    .eq("user_id", user.id)
+    .gte("created_at", new Date(Date.now() - 60 * 86400_000).toISOString())
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (gameId && /^[a-z0-9_]{2,32}$/.test(gameId)) q = q.eq("game_id", gameId);
+  const { data, error } = await q;
+  if (error) {
+    console.error("[orders] 列出訂單失敗", error.message);
+    return Response.json({ error: "failed" }, { status: 500 });
+  }
+  return Response.json({ orders: data ?? [] }, { headers: { "cache-control": "no-store" } });
 }
 
 /** 到期時間換成台灣日期 YYYY-MM-DD（黑貓 PAY 的到期日欄位） */

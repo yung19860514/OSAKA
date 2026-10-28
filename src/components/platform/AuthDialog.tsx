@@ -18,6 +18,8 @@ export default function AuthDialog({ initialMode = "signin", onClose, onDone }: 
   const [agree, setAgree] = useState(false);
   const [error, setError] = useState<AuthError | null>(null);
   const [busy, setBusy] = useState(false);
+  /** 不是錯誤、但要告訴玩家的訊息（例：確認信已寄出） */
+  const [info, setInfo] = useState<string | null>(null);
   const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -45,14 +47,28 @@ export default function AuthDialog({ initialMode = "signin", onClose, onDone }: 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setInfo(null);
     if (!validEmail(email)) return setError("bad_email");
     if (mode === "signup" && !validPassword(password)) return setError("weak_password");
     setBusy(true);
     const r = mode === "signup" ? await auth.signUp({ email, password }) : await auth.signIn({ email, password });
     setBusy(false);
+    if (!r.ok && r.error === "check_email") return setInfo(t("auth.err.check_email"));
     if (!r.ok) return setError(r.error);
     onDone?.();
     onClose();
+  };
+
+  /** 忘記密碼：用上面填的 Email 寄重設信 */
+  const forgot = async () => {
+    setError(null);
+    setInfo(null);
+    if (!validEmail(email)) return setError("bad_email");
+    setBusy(true);
+    const r = await auth.requestPasswordReset(email);
+    setBusy(false);
+    if (!r.ok) return setError(r.error ?? "network");
+    setInfo(t("auth.resetSent"));
   };
 
   return (
@@ -122,6 +138,16 @@ export default function AuthDialog({ initialMode = "signin", onClose, onDone }: 
           <p className="pf-form-error" role="alert">
             {t(`auth.err.${error}`)}
           </p>
+        )}
+        {info && (
+          <p className="pf-form-info" role="status">
+            {info}
+          </p>
+        )}
+        {mode === "signin" && auth.mode === "cloud" && (
+          <button type="button" className="pf-link-btn" disabled={busy} onClick={forgot}>
+            {t("auth.forgot")}
+          </button>
         )}
 
         <button className="pf-btn pf-btn-primary pf-btn-lg" type="submit" disabled={busy || (mode === "signup" && !agree)}>
